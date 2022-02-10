@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.githubbrowser.R
 import com.example.githubbrowser.dataModels.RepoItem
 
-class ReposRecyclerAdapter(private var repoList: List<RepoItem>) :
+class ReposRecyclerAdapter(private var repoList: MutableList<RepoItem>) :
     RecyclerView.Adapter<ReposRecyclerAdapter.ViewHolder>() {
 
 
