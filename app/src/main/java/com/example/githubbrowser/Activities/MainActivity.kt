@@ -1,7 +1,8 @@
-package com.example.githubbrowser
+package com.example.githubbrowser.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.githubbrowser.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
