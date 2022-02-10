@@ -34,7 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/placeholder_repo_name"
+            app:layout_constraintBottom_toTopOf="@+id/repo_desc"
             app:layout_constraintEnd_toStartOf="@+id/send_repo_info"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/repo_owner_avatar"
             app:layout_constraintTop_toTopOf="@+id/repo_owner_avatar" />
 
@@ -43,11 +45,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
             android:text="@string/placeholder_repo_desc"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/repo_owner_avatar"
             app:layout_constraintEnd_toStartOf="@+id/send_repo_info"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/repo_owner_avatar"
             app:layout_constraintTop_toBottomOf="@+id/repo_name" />
 
