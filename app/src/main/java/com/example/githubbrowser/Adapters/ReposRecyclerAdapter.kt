@@ -24,7 +24,7 @@ class ReposRecyclerAdapter(private var repoList: MutableList<RepoItem>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val repoItem = repoList[position]
         holder.repoName.text = repoItem.repoName
-        holder.repoDesc.text = repoItem.repoDesc
+        holder.repoDesc.text = repoItem.repoDesc?:"No Description"
 
         Glide.with(holder.image.context).load(repoItem.imgUrl).circleCrop().into(holder.image)
     }
