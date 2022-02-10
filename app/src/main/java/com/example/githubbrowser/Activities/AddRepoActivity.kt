@@ -9,7 +9,7 @@ import com.example.githubbrowser.databinding.ActivityAddRepoBinding
 
 class AddRepoActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityAddRepoBinding
+    private lateinit var binding: ActivityAddRepoBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=DataBindingUtil.setContentView(this,R.layout.activity_add_repo)

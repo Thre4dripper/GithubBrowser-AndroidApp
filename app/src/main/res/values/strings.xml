@@ -5,12 +5,18 @@
 
     //activities headings
     <string name="github_browser">Github Browser</string>
+    <string name="add_repo">Add Repo</string>
 
     //content descriptions
-    <string name="add_repo">Add Repo</string>
+    <string name="desc_add_repo_button">Add Repo</string>
 
     //repo card
     <string name="placeholder_repo_name">Repo Name</string>
     <string name="placeholder_repo_desc">Repo Desc</string>
     <string name="desc_send_repo_info">Send Repo\'s Info</string>
+
+    //add repo activity
+    <string name="owner_organization">Owner/Organization</string>
+    <string name="repo_name">Repo Name</string>
+    <string name="add_repo_button">ADD</string>
 </resources>

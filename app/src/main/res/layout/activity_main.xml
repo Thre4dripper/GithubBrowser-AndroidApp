@@ -32,7 +32,7 @@
             android:backgroundTint="@color/white"
             app:borderWidth="0dp"
             android:layout_marginEnd="16dp"
-            android:contentDescription="@string/add_repo"
+            android:contentDescription="@string/desc_add_repo_button"
             android:src="@drawable/ic_home_add_repo"
             app:layout_constraintBottom_toBottomOf="@+id/home_heading"
             app:layout_constraintEnd_toEndOf="parent"
