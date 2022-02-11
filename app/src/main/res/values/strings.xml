@@ -6,9 +6,11 @@
     //activities headings
     <string name="github_browser">Github Browser</string>
     <string name="add_repo">Add Repo</string>
+    <string name="details">Details</string>
 
     //content descriptions
     <string name="desc_add_repo_button">Add Repo</string>
+    <string name="desc_back_button">Back Button</string>
 
     //repo card
     <string name="placeholder_repo_name">Repo Name</string>

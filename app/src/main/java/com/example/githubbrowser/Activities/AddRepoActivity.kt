@@ -2,6 +2,8 @@ package com.example.githubbrowser.Activities
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,9 +24,13 @@ class AddRepoActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_repo)
 
         binding.addRepoButton.setOnClickListener {
-            if (verifyAvailableNetwork(this))
+            if (checkForInternet(this))
                 addRepo()
             else Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show()
+        }
+
+        binding.backButtonAddRepo.setOnClickListener {
+            super.onBackPressed()
         }
     }
 
@@ -61,10 +67,25 @@ class AddRepoActivity : AppCompatActivity() {
         }
     }
 
-    fun verifyAvailableNetwork(activity: AppCompatActivity): Boolean {
+    /**====================================== METHOD FOR CHECKING INTERNET CONNECTIVITY =========================================**/
+    private fun checkForInternet(context: Context): Boolean {
+
         val connectivityManager =
-            activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo = connectivityManager.activeNetworkInfo
-        return networkInfo != null && networkInfo.isConnected
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = connectivityManager.activeNetwork ?: return false
+            val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+
+            return when {
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                else -> false
+            }
+        } else {
+            @Suppress("DEPRECATION") val networkInfo =
+                connectivityManager.activeNetworkInfo ?: return false
+            @Suppress("DEPRECATION") return networkInfo.isConnected
+        }
     }
 }
