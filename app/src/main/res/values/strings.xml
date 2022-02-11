@@ -19,5 +19,5 @@
     <string name="owner_organization">Owner/Organization</string>
     <string name="repo_name">Repo Name</string>
     <string name="add_repo_button">ADD REPO</string>
-    <string name="error_text_view">Repo Doesn\'t Exist</string>
+    <string name="repo_not_found">Repo Doesn\'t Exist</string>
 </resources>
