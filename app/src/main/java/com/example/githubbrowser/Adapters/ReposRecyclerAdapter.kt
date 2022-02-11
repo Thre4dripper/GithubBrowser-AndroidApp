@@ -6,14 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.githubbrowser.R
 import com.example.githubbrowser.dataModels.RepoItem
 
-class ReposRecyclerAdapter(private var repoList: MutableList<RepoItem>) :
+class ReposRecyclerAdapter(
+    private var repoList: MutableList<RepoItem>,
+    private val homeOnClickInterface: HomeOnClickInterface
+) :
     RecyclerView.Adapter<ReposRecyclerAdapter.ViewHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -30,6 +33,9 @@ class ReposRecyclerAdapter(private var repoList: MutableList<RepoItem>) :
         else holder.repoDesc.text = Html.fromHtml("<em>No Description</em>")
 
         Glide.with(holder.image.context).load(repoItem.imgUrl).circleCrop().into(holder.image)
+        holder.repoCard.setOnClickListener {
+            homeOnClickInterface.repoClick(position)
+        }
     }
 
     override fun getItemCount() = repoList.size
@@ -38,5 +44,10 @@ class ReposRecyclerAdapter(private var repoList: MutableList<RepoItem>) :
         var repoName = itemView.findViewById<TextView>(R.id.repo_name)!!
         var repoDesc = itemView.findViewById<TextView>(R.id.repo_desc)!!
         var image = itemView.findViewById<ImageView>(R.id.repo_owner_avatar)!!
+        var repoCard = itemView.findViewById<CardView>(R.id.repo_card)!!
+    }
+
+    interface HomeOnClickInterface {
+        fun repoClick(position: Int);
     }
 }

@@ -22,4 +22,8 @@
     <string name="repo_name">Repo Name</string>
     <string name="add_repo_button">ADD REPO</string>
     <string name="repo_not_found">Repo Doesn\'t Exist</string>
+
+    //details activity
+    <string name="details_repo_name">Repo Name:</string>
+    <string name="details_repo_desc">Description:</string>
 </resources>
