@@ -1,5 +1,6 @@
 package com.example.githubbrowser.Adapters
 
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,9 @@ class ReposRecyclerAdapter(private var repoList: MutableList<RepoItem>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val repoItem = repoList[position]
         holder.repoName.text = repoItem.repoName
-        holder.repoDesc.text = repoItem.repoDesc?:"No Description"
+        if (repoItem.repoDesc != "null")
+            holder.repoDesc.text = repoItem.repoDesc
+        else holder.repoDesc.text = Html.fromHtml("<em>No Description</em>")
 
         Glide.with(holder.image.context).load(repoItem.imgUrl).circleCrop().into(holder.image)
     }

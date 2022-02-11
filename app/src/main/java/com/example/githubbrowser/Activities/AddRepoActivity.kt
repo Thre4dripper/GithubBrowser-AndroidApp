@@ -3,8 +3,6 @@ package com.example.githubbrowser.Activities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.lifecycleScope
-import com.example.githubbrowser.Networking.ApiResponse
 import com.example.githubbrowser.R
 import com.example.githubbrowser.ViewModels.HomeViewModel
 import com.example.githubbrowser.databinding.ActivityAddRepoBinding
@@ -22,16 +20,40 @@ class AddRepoActivity : AppCompatActivity() {
 
         binding.addRepoButton.setOnClickListener {
             addRepo()
-            finish()
         }
     }
 
+    /**======================================== METHOD FOR ADD NEW REPO =========================================== **/
     private fun addRepo() = CoroutineScope(Dispatchers.Main).launch {
 
-        val task = async(Dispatchers.IO) {
-            HomeViewModel.addNewRepo(binding.ownerTextView.text.toString(),binding.addRepoTextView.text.toString())
+        val owner=binding.ownerTextView.text.toString()
+        val repoName=binding.addRepoTextView.text.toString()
+
+        //fields should not be empty
+        if(owner.isNotEmpty() && repoName.isNotEmpty()) {
+            binding.ownerTextLayout.error=null
+            binding.repoNameTextLayout.error=null
+
+            //sending api call
+            val task = async(Dispatchers.IO) {
+                HomeViewModel.addNewRepo(owner, repoName)
+            }
+
+            //getting response
+            val result=task.await()
+
+            //API Response validity Check
+            if(result==null)
+                binding.errorTextView.text=getString(R.string.error_text_view)
+            else {
+                binding.errorTextView.text=""
+                HomeViewModel.adapter.notifyItemInserted(HomeViewModel.reposList.size)
+                finish()
+            }
         }
-        task.await()
-        HomeViewModel.adapter.notifyItemInserted(HomeViewModel.reposList.size)
+        else {
+            binding.ownerTextLayout.error = "Required*"
+            binding.repoNameTextLayout.error = "Required*"
+        }
     }
 }

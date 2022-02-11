@@ -14,7 +14,7 @@ class ApiResponse {
 
     companion object {
         private const val BASE_URL = "https://api.github.com/repos/"
-        fun checkValidity(owner: String, repoName: String):RepoItem? {
+        fun getJsonResponse(owner: String, repoName: String):RepoItem? {
 
             val response = StringBuilder()
             var url: URL?=null
@@ -56,7 +56,6 @@ class ApiResponse {
                     }
                 }
             }
-            println(response)
             return JsonParser.getRepoDetails(response.toString())
         }
     }
