@@ -14,12 +14,25 @@ class ApiResponse {
 
     companion object {
         private const val BASE_URL = "https://api.github.com/repos/"
-        fun getJsonResponse(owner: String, repoName: String):RepoItem? {
+
+        fun getBranchesJson(owner: String, repoName: String): List<String> {
+            val response = getJsonResponse("$BASE_URL$owner/$repoName/branches")
+
+            return JsonParser.getBranchesList(response.toString())
+        }
+
+        fun getRepoInfoJson(owner: String, repoName: String): RepoItem? {
+            val response = getJsonResponse("$BASE_URL$owner/$repoName") ?: return null
+
+            return JsonParser.getRepoDetails(response.toString())
+        }
+
+        private fun getJsonResponse(apiUrl: String): StringBuilder? {
 
             val response = StringBuilder()
-            var url: URL?=null
+            var url: URL? = null
             try {
-                url=URL("$BASE_URL$owner/$repoName")
+                url = URL(apiUrl)
             } catch (e: Exception) {
 
             }
@@ -56,7 +69,7 @@ class ApiResponse {
                     }
                 }
             }
-            return JsonParser.getRepoDetails(response.toString())
+            return response
         }
     }
 }

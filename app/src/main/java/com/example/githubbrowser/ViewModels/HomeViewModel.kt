@@ -12,7 +12,7 @@ class HomeViewModel{
         var reposList: MutableList<RepoItem> = mutableListOf()
 
         fun addNewRepo(owner: String, repoName: String): RepoItem? {
-            val repoItem = ApiResponse.getJsonResponse(owner, repoName)
+            val repoItem = ApiResponse.getRepoInfoJson(owner, repoName)
 
             //checking result of API response received
             if (repoItem != null)

@@ -1,13 +1,11 @@
 package com.example.githubbrowser.Activities
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.githubbrowser.R
 import com.example.githubbrowser.ViewModels.HomeViewModel
-import com.example.githubbrowser.databinding.ActivityAddRepoBinding
 import com.example.githubbrowser.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
@@ -22,11 +20,11 @@ class DetailActivity : AppCompatActivity() {
         }
 
         val repoCardIndex: Int = intent.getIntExtra("repo.card.onclick", -1)
-        setNameAndDesc(repoCardIndex)
+        setDetails(repoCardIndex)
     }
 
     /**================================== METHOD FOR SETTING REPO NAME AND DESC =========================================**/
-    private fun setNameAndDesc(index: Int) {
+    private fun setDetails(index: Int) {
         binding.detailsRepoNameText.text = Html.fromHtml(
             "<b>" + getString(R.string.details_repo_name) + "</b> " +
                     HomeViewModel.reposList[index].repoName
@@ -35,6 +33,11 @@ class DetailActivity : AppCompatActivity() {
         binding.detailsRepoDescText.text = Html.fromHtml(
             "<b>" + getString(R.string.details_repo_desc) + "</b> " +
                     HomeViewModel.reposList[index].repoDesc
+        )
+
+        binding.detailsIssueTextView.text = getString(
+            R.string.details_issues_text,
+            HomeViewModel.reposList[index].issues.toString()
         )
     }
 }

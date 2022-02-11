@@ -28,4 +28,6 @@
     <string name="details_repo_desc">Description:</string>
     <string name="details_branch_text">Branch</string>
     <string name="details_issues_text">Issues(%s)</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
