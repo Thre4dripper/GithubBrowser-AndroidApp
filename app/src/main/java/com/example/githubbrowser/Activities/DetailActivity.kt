@@ -1,6 +1,8 @@
 package com.example.githubbrowser.Activities
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
@@ -84,13 +86,23 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    /**================================================ METHOD FOR DELETING REPO ==================================================**/
     private fun deleteRepo(index: Int) {
         HomeViewModel.reposList.removeAt(index)
         HomeViewModel.adapter.notifyItemRemoved(index)
         finish()
     }
 
+    /**=============================================== METHOD FOR OPENING REPO LINK ==============================================**/
     private fun openRepo(index: Int) {
+        val github = "https://github.com/"
+        val ownerName = HomeViewModel.reposList[index].repoOwner
+        val repoName = HomeViewModel.reposList[index].repoName
+        val repoUrl = "$github/$ownerName/$repoName"
 
+        val uri = Uri.parse(repoUrl) // missing 'http://' will cause crashed
+
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 }
