@@ -3,8 +3,10 @@ package com.example.githubbrowser.Activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubbrowser.Adapters.ReposRecyclerAdapter
 import com.example.githubbrowser.R
@@ -28,9 +30,25 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         initializeRecyclerView()
 
-        binding.homeFab.setOnClickListener {
-            addRepoActivity()
-        }
+        binding.homeFab.setOnClickListener { addRepoActivity() }
+
+        initializeHintLayouts()
+    }
+
+    /**===================================== METHOD FOR INITIALIZING HINT LAYOUTS ==============================================**/
+    private fun initializeHintLayouts() {
+        binding.addRepoButton2.setOnClickListener { addRepoActivity() }
+
+        HomeViewModel.repoCount.value = 0
+        HomeViewModel.repoCount.observe(this, Observer {
+            if (it == 0) {
+                binding.trackRepoTextView.visibility = View.VISIBLE
+                binding.addRepoButton2.visibility = View.VISIBLE
+            } else {
+                binding.trackRepoTextView.visibility = View.GONE
+                binding.addRepoButton2.visibility = View.GONE
+            }
+        })
     }
 
     /**========================================== METHOD FOR INITIALIZING RECYCLER VIEW ========================================**/
@@ -46,6 +64,8 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
         HomeViewModel.adapter.notifyItemInserted(HomeViewModel.reposList.size)
 //        val intent = Intent(this, AddRepoActivity::class.java)
 //        startActivity(intent)
+        HomeViewModel.repoCount.value = HomeViewModel.repoCount.value!! + 1
+        Log.d(TAG, "addRepoActivity: " + HomeViewModel.repoCount.value)
     }
 
     /**============================================ ONCLICK METHOD FOR REPO CARDS ========================================**/

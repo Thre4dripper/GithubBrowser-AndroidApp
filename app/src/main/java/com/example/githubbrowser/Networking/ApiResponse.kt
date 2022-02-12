@@ -92,7 +92,6 @@ class ApiResponse {
                         inputStream.close()
                     } catch (e: IOException) {
                         e.printStackTrace()
-                        return null
                     }
                 }
             }

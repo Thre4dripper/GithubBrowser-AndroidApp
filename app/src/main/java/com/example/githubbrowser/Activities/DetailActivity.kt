@@ -90,6 +90,7 @@ class DetailActivity : AppCompatActivity() {
     private fun deleteRepo(index: Int) {
         HomeViewModel.reposList.removeAt(index)
         HomeViewModel.adapter.notifyItemRemoved(index)
+        HomeViewModel.repoCount.value = HomeViewModel.repoCount.value!! - 1
         finish()
     }
 
