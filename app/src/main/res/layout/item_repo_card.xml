@@ -48,6 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:maxLines="2"
             android:text="@string/placeholder_repo_desc"
             app:layout_constraintBottom_toBottomOf="@+id/repo_owner_avatar"
             app:layout_constraintEnd_toStartOf="@+id/send_repo_info"

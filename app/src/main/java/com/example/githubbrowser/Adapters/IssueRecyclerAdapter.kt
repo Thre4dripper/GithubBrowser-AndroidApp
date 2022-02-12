@@ -25,6 +25,8 @@ class IssueRecyclerAdapter(private val issueList: MutableList<IssueItem>) :
         holder.issueText.text = issueItem.issue
         Glide.with(holder.issuerAvatar.context).load(issueItem.imgUrl).circleCrop()
             .into(holder.issuerAvatar)
+
+        holder.issuerName.text = issueItem.issuerName
     }
 
     override fun getItemCount() = issueList.size
@@ -32,5 +34,6 @@ class IssueRecyclerAdapter(private val issueList: MutableList<IssueItem>) :
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val issueText = itemView.findViewById<TextView>(R.id.issue_title_text_view)!!
         val issuerAvatar = itemView.findViewById<ImageView>(R.id.issue_creator_avatar)!!
+        val issuerName = itemView.findViewById<TextView>(R.id.issue_creator_name)!!
     }
 }

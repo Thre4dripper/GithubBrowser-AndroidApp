@@ -30,7 +30,7 @@ class ApiResponse {
         }
 
         fun getIssuesList(owner: String, repoName: String): MutableList<IssueItem> {
-            val response = getJsonResponse("$BASE_URL$owner/$repoName/issues")
+            val response = getJsonResponse("$BASE_URL$owner/$repoName/issues?state=open&per_page=100000")
 
             return JsonParser.issuesListJsonParser(response.toString())
         }
