@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubbrowser.Adapters.ReposRecyclerAdapter
 import com.example.githubbrowser.R
+import com.example.githubbrowser.ViewModels.DetailsViewModel
 import com.example.githubbrowser.ViewModels.HomeViewModel
 import com.example.githubbrowser.databinding.ActivityMainBinding
 
@@ -39,6 +40,11 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
 
     /**============================================ ONCLICK METHOD FOR REPO CARDS ========================================**/
     override fun repoClick(position: Int) {
+
+        //clearing lists before opening new repo
+        DetailsViewModel.branchesList.clear()
+        DetailsViewModel.issuesList.clear()
+
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("repo.card.onclick", position)
         startActivity(intent)

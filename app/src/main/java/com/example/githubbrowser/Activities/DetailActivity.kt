@@ -15,7 +15,7 @@ import com.example.githubbrowser.databinding.ActivityDetailBinding
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
 
-    private var selectedColor = Color.parseColor("#546E7A")
+    private var selectedColor = Color.parseColor("#78909C")
     private var unSelectedColor = Color.WHITE
 
     override fun onCreate(savedInstanceState: Bundle?) {

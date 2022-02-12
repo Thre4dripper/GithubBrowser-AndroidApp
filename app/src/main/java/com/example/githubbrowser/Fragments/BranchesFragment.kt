@@ -24,6 +24,7 @@ class BranchesFragment(private val index: Int) : Fragment() {
 
     private val TAG = "BranchesFragment"
     private lateinit var binding: FragmentBranchesBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,6 +37,7 @@ class BranchesFragment(private val index: Int) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.branchRv.layoutManager = LinearLayoutManager(requireContext() as Activity)
         getBranches(index)
     }
 
@@ -55,7 +57,6 @@ class BranchesFragment(private val index: Int) : Fragment() {
             task.await()
         }
 
-        binding.branchRv.layoutManager = LinearLayoutManager(requireContext() as Activity)
         binding.branchRv.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
@@ -63,8 +64,8 @@ class BranchesFragment(private val index: Int) : Fragment() {
             )
         )
 
-        DetailsViewModel.adapter =
+        DetailsViewModel.branchesAdapter =
             BranchesRecyclerAdapter(DetailsViewModel.branchesList)
-        binding.branchRv.adapter = DetailsViewModel.adapter
+        binding.branchRv.adapter = DetailsViewModel.branchesAdapter
     }
 }
