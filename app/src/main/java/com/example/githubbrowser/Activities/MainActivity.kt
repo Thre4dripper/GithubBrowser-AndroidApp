@@ -7,18 +7,24 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubbrowser.Adapters.ReposRecyclerAdapter
 import com.example.githubbrowser.R
 import com.example.githubbrowser.ViewModels.DetailsViewModel
 import com.example.githubbrowser.ViewModels.HomeViewModel
 import com.example.githubbrowser.dataModels.RepoItem
+import com.example.githubbrowser.database.RepoDetailsDatabase
+import com.example.githubbrowser.database.RepoDetailsEntity
 import com.example.githubbrowser.databinding.ActivityMainBinding
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterface {
 
     private val TAG = "MainActivity"
     private lateinit var binding: ActivityMainBinding
+    private lateinit var db: RepoDetailsDatabase
 
     companion object {
         const val REPO_CARD_KEY: String = "repo.card.onclick"
@@ -28,11 +34,37 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        initializeRecyclerView()
 
         binding.homeFab.setOnClickListener { addRepoActivity() }
 
+        db = RepoDetailsDatabase.getDatabase(this)
+
+        initializeRecyclerView()
         initializeHintLayouts()
+        getFromDatabase()
+    }
+
+    private fun getFromDatabase() {
+        val repoDetailsList: MutableList<RepoItem> = mutableListOf()
+        lifecycleScope.launch {
+
+            val repoDetails = db.entityDao().getData()
+
+            for (i in 0 until repoDetails.size)
+                repoDetailsList.add(
+                    RepoItem(
+                        repoDetails[i].repoOwner,
+                        repoDetails[i].repoName,
+                        repoDetails[i].repoDesc,
+                        repoDetails[i].imgUrl,
+                        repoDetails[i].issues
+                    )
+                )
+
+            Log.d(TAG, "getFromDatabase: $repoDetailsList")
+            HomeViewModel.reposList = repoDetailsList
+            HomeViewModel.adapter.notifyItemRangeInserted(0, repoDetailsList.size)
+        }
     }
 
     /**===================================== METHOD FOR INITIALIZING HINT LAYOUTS ==============================================**/
@@ -65,7 +97,16 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
 //        val intent = Intent(this, AddRepoActivity::class.java)
 //        startActivity(intent)
         HomeViewModel.repoCount.value = HomeViewModel.repoCount.value!! + 1
-        Log.d(TAG, "addRepoActivity: " + HomeViewModel.repoCount.value)
+
+        val repoDetailsEntity = RepoDetailsEntity(0, "Owner", "Name", "Desc", "url", 25)
+
+        lifecycleScope.launch {
+            insertDataIntoDatabase(repoDetailsEntity)
+        }
+    }
+
+    private suspend fun insertDataIntoDatabase(repoDetailsEntity: RepoDetailsEntity) {
+        db.entityDao().insertData(repoDetailsEntity)
     }
 
     /**============================================ ONCLICK METHOD FOR REPO CARDS ========================================**/

@@ -12,5 +12,5 @@ interface RepoDetailsDao {
     suspend fun insertData(repoDetailsEntity: RepoDetailsEntity)
 
     @Query("Select * From repo_details")
-    suspend fun getdata(): List<RepoDetailsEntity>
+    suspend fun getData(): MutableList<RepoDetailsEntity>
 }
