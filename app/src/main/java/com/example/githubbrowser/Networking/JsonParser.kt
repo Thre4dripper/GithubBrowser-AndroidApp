@@ -40,7 +40,10 @@ class JsonParser {
                 val issueTitle = rootObject.getJSONObject(i).getString("title")
                 val issuerAvatar =
                     rootObject.getJSONObject(i).getJSONObject("user").getString("avatar_url")
-                issuesList.add(IssueItem(issueTitle, issuerAvatar))
+                val issuerName =
+                    rootObject.getJSONObject(i).getJSONObject("user").getString("login")
+
+                issuesList.add(IssueItem(issueTitle, issuerAvatar, issuerName))
             }
             return issuesList
         }
