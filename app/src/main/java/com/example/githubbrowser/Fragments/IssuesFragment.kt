@@ -70,11 +70,15 @@ class IssuesFragment() : Fragment() {
             val result = task.await()
             if (result == null) {
                 binding.issuesLoadingTextView.text = "Time out!!!, Slow Network"
+                binding.issuesLoadingProgressView.visibility = View.GONE
+
+                //resetting list for recall api req in case on time out
+                DetailsViewModel.issuesList = mutableListOf()
+                return@launch
             } else {
                 binding.issuesLoadingTextView.visibility = View.GONE
+                binding.issuesLoadingProgressView.visibility = View.GONE
             }
-
-            binding.issuesLoadingProgressView.visibility = View.GONE
         }
 
 

@@ -70,10 +70,16 @@ class CommitsActivity : AppCompatActivity() {
 
                 if (result == null) {
                     binding.commitsLoadingTextView.text = "Time out!!!, Slow Network"
+                    binding.commitsLoadingProgressView.visibility = View.GONE
+
+                    //resetting list for recall api req in case on time out
+                    CommitsViewModel.commitsList = mutableListOf()
+                    return@launch
                 } else {
                     binding.commitsLoadingTextView.visibility = View.GONE
+                    binding.commitsLoadingProgressView.visibility = View.GONE
                 }
-                binding.commitsLoadingProgressView.visibility = View.GONE
+
             }
 
             CommitsViewModel.commitsAdapter =

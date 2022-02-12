@@ -74,11 +74,15 @@ class BranchesFragment : Fragment(), BranchesRecyclerAdapter.BranchClickInterfac
                 val result = task.await()
                 if (result == null) {
                     binding.branchLoadingTextView.text = "Time out!!!, Slow Network"
+                    binding.branchLoadingProgressView.visibility = View.GONE
+
+                    //resetting list for recall api req in case on time out
+                    DetailsViewModel.branchesList = mutableListOf()
+                    return@launch
                 } else {
                     binding.branchLoadingTextView.visibility = View.GONE
+                    binding.branchLoadingProgressView.visibility = View.GONE
                 }
-                binding.branchLoadingProgressView.visibility = View.GONE
-
             }
 
             binding.branchRv.addItemDecoration(
@@ -94,7 +98,7 @@ class BranchesFragment : Fragment(), BranchesRecyclerAdapter.BranchClickInterfac
         }
 
     override fun branchOnClick(position: Int) {
-        CommitsViewModel.commitsList.clear()
+        CommitsViewModel.commitsList!!.clear()
 
         val intent = Intent(requireContext(), CommitsActivity::class.java)
         intent.putExtra(BRANCH_CARD_KEY, position)

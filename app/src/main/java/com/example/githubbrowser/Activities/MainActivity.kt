@@ -9,6 +9,7 @@ import com.example.githubbrowser.Adapters.ReposRecyclerAdapter
 import com.example.githubbrowser.R
 import com.example.githubbrowser.ViewModels.DetailsViewModel
 import com.example.githubbrowser.ViewModels.HomeViewModel
+import com.example.githubbrowser.dataModels.RepoItem
 import com.example.githubbrowser.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterface {
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
     private lateinit var binding: ActivityMainBinding
 
     companion object {
-        const val REPO_CARD_KEY:String ="repo.card.onclick"
+        const val REPO_CARD_KEY: String = "repo.card.onclick"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +47,8 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
     override fun repoClick(position: Int) {
 
         //clearing lists before opening new repo
-        DetailsViewModel.branchesList.clear()
-        DetailsViewModel.issuesList.clear()
+        DetailsViewModel.branchesList!!.clear()
+        DetailsViewModel.issuesList!!.clear()
 
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra(REPO_CARD_KEY, position)
