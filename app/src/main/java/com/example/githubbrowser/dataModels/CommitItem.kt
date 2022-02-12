@@ -4,6 +4,6 @@ data class CommitItem(
     val date: String,
     val shaCode: String,
     val commitMessage: String,
-    val commitUserAvatar: String,
-    val commitUserName: String
+    val imgUrl: String,
+    val committerName: String
 )
