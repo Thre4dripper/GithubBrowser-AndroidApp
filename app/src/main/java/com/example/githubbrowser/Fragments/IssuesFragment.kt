@@ -45,6 +45,9 @@ class IssuesFragment(private val index: Int) : Fragment() {
 
         //API is only called first time
         if (DetailsViewModel.issuesList.size == 0) {
+            binding.issuesLoadingProgressView.visibility = View.VISIBLE
+            binding.issuesLoadingTextView.visibility = View.VISIBLE
+
             //sending api call
             val task = async(Dispatchers.IO) {
                 DetailsViewModel.getIssuesList(
@@ -54,7 +57,14 @@ class IssuesFragment(private val index: Int) : Fragment() {
             }
 
             //getting response
-            task.await()
+            val size = task.await()
+
+            binding.issuesLoadingProgressView.visibility = View.GONE
+
+            if (size == 0)
+                binding.issuesLoadingTextView.text = getString(R.string.no_issues)
+            else
+                binding.issuesLoadingTextView.visibility = View.GONE
         }
 
 

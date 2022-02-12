@@ -45,6 +45,8 @@ class BranchesFragment(private val index: Int) : Fragment() {
 
         //API is only called first time
         if (DetailsViewModel.branchesList.size == 0) {
+            binding.branchLoadingProgressView.visibility = View.VISIBLE
+            binding.branchLoadingTextView.visibility = View.VISIBLE
             //sending api call
             val task = async(Dispatchers.IO) {
                 DetailsViewModel.getBranchesList(
@@ -55,6 +57,8 @@ class BranchesFragment(private val index: Int) : Fragment() {
 
             //getting response
             task.await()
+            binding.branchLoadingProgressView.visibility = View.GONE
+            binding.branchLoadingTextView.visibility = View.GONE
         }
 
         binding.branchRv.addItemDecoration(

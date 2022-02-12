@@ -31,9 +31,12 @@
 
     //branch fragment
     <string name="placeholder_branch_name">Branch Name</string>
+    <string name="loading_branches">Loading Branches</string>
 
     //issue fragment
     <string name="text_issue_creator">Issue Creator</string>
     <string name="placeholder_issue">Issue</string>
     <string name="desc_issue_creator_avatar">Issue Creator Avatar</string>
+    <string name="loading_issues">Loading Issues</string>
+    <string name="no_issues">No Issues</string>
 </resources>
