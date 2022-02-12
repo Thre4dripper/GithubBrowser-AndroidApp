@@ -7,6 +7,7 @@
     <string name="github_browser">Github Browser</string>
     <string name="add_repo">Add Repo</string>
     <string name="details">Details</string>
+    <string name="commits">Commits</string>
 
     //content descriptions
     <string name="desc_add_repo_button">Add Repo</string>
@@ -28,6 +29,8 @@
     <string name="details_repo_desc">Description:</string>
     <string name="details_branch_text">BRANCHES</string>
     <string name="details_issues_text">ISSUES(%s)</string>
+
+    //commits activity
 
     //branch fragment
     <string name="placeholder_branch_name">Branch Name</string>

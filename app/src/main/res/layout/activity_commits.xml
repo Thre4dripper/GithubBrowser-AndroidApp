@@ -20,9 +20,26 @@
         <TextView
             android:id="@+id/textView"
             style="@style/ActivitiesHeading"
-            android:text="@string/add_repo"
+            android:text="@string/commits"
             app:layout_constraintStart_toEndOf="@+id/back_button_add_repo"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/commits_branch_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder_branch_name"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/commits_branch_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

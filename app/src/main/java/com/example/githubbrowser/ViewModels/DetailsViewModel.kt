@@ -8,19 +8,19 @@ import com.example.githubbrowser.dataModels.IssueItem
 
 class DetailsViewModel {
     companion object {
-        var selectedRepo :Int= -1
+        var selectedRepo: Int = -1
         lateinit var branchesAdapter: BranchesRecyclerAdapter
         lateinit var issuesAdapter: IssueRecyclerAdapter
 
         var branchesList: MutableList<String> = mutableListOf()
         var issuesList: MutableList<IssueItem> = mutableListOf()
 
-        fun getBranchesList(owner: String, repoName: String):Int {
+        fun getBranchesList(owner: String, repoName: String): Int {
             branchesList = ApiResponse.getBranchesList(owner, repoName)
             return branchesList.size
         }
 
-        fun getIssuesList(owner: String, repoName: String):Int {
+        fun getIssuesList(owner: String, repoName: String): Int {
             issuesList = ApiResponse.getIssuesList(owner, repoName)
             return issuesList.size
         }
