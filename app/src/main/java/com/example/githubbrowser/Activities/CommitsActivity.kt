@@ -4,12 +4,8 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.githubbrowser.Adapters.BranchesRecyclerAdapter
 import com.example.githubbrowser.Adapters.CommitsRecyclerAdapter
 import com.example.githubbrowser.Fragments.BranchesFragment
 import com.example.githubbrowser.R
@@ -26,6 +22,7 @@ class CommitsActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityCommitsBinding
 
+    /**========================================================== ON CREATE =========================================================**/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_commits)
@@ -39,16 +36,23 @@ class CommitsActivity : AppCompatActivity() {
 
         binding.commitsBranchName.text = DetailsViewModel.branchesList!![branchIndex]
 
-        setRecyclerView()
+        initializeRecyclerView()
     }
 
-    private fun setRecyclerView() {
+    /**===================================================== INITIALIZING RECYCLER VIEW =============================================**/
+    private fun initializeRecyclerView() {
         binding.commitsRv.layoutManager = LinearLayoutManager(this)
+
+        //Network Check
         if (AddRepoActivity.checkForInternet(this))
             getCommits(CommitsViewModel.selectedBranch, this)
-        else Toast.makeText(this, getString(R.string.time_out), Toast.LENGTH_LONG).show()
+        else {
+            binding.commitsLoadingTextView.visibility = View.VISIBLE
+            binding.commitsLoadingTextView.text = getString(R.string.no_internet)
+        }
     }
 
+    /**====================================  METHOD FOR FETCHING COMMITS BY API CALL ============================================**/
     private fun getCommits(index: Int, context: Context) =
         CoroutineScope(Dispatchers.Main).launch {
 

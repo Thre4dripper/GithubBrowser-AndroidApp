@@ -4,6 +4,7 @@
     <string name="app_name">Github Browser</string>
 
     //general strings
+    <string name="no_internet">No Internet Access</string>
     <string name="time_out">Time Out, Slow Network</string>
     <string name="check_network">or Check Network Connectivity</string>
 

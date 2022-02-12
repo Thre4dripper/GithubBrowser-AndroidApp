@@ -36,6 +36,7 @@ class BranchesFragment : Fragment(), BranchesRecyclerAdapter.BranchClickInterfac
         const val BRANCH_CARD_KEY: String = "branch.card.onclick"
     }
 
+    /**======================================================= ON CREATE VIEW =======================================================**/
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,16 +46,23 @@ class BranchesFragment : Fragment(), BranchesRecyclerAdapter.BranchClickInterfac
         return binding.root
     }
 
+    /**======================================================= ON VIEW CREATED =======================================================**/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val context = requireContext() as Activity
         binding.branchRv.layoutManager = LinearLayoutManager(context)
+
+        //Network Check
         if (AddRepoActivity.checkForInternet(context))
             getBranches(DetailsViewModel.selectedRepo, context)
-        else Toast.makeText(context, getString(R.string.time_out), Toast.LENGTH_LONG).show()
+        else {
+            binding.branchLoadingTextView.visibility = View.VISIBLE
+            binding.branchLoadingTextView.text = getString(R.string.no_internet)
+        }
     }
 
+    /**====================================  METHOD FOR FETCHING BRANCHES BY API CALL ============================================**/
     private fun getBranches(index: Int, context: Context) =
         CoroutineScope(Dispatchers.Main).launch {
 
@@ -97,6 +105,8 @@ class BranchesFragment : Fragment(), BranchesRecyclerAdapter.BranchClickInterfac
             binding.branchRv.adapter = DetailsViewModel.branchesAdapter
         }
 
+
+    /**============================================ ONCLICK METHOD FOR BRANCH CARDS ========================================**/
     override fun branchOnClick(position: Int) {
         CommitsViewModel.commitsList!!.clear()
 

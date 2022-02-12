@@ -28,6 +28,7 @@ class IssuesFragment() : Fragment() {
     private val TAG = "IssuesFragment"
     private lateinit var binding: FragmentIssuesBinding
 
+    /**======================================================= ON CREATE VIEW =======================================================**/
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,16 +38,23 @@ class IssuesFragment() : Fragment() {
         return binding.root
     }
 
+    /**======================================================= ON VIEW CREATED =======================================================**/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val context = requireContext() as Activity
         binding.issueRv.layoutManager = LinearLayoutManager(context)
+
+        //Network Check
         if (AddRepoActivity.checkForInternet(context))
             getIssues(DetailsViewModel.selectedRepo, context)
-        else Toast.makeText(context, getString(R.string.time_out), Toast.LENGTH_LONG).show()
+        else {
+            binding.issuesLoadingTextView.visibility = View.VISIBLE
+            binding.issuesLoadingTextView.text = getString(R.string.no_internet)
+        }
     }
 
+    /**====================================  METHOD FOR FETCHING ISSUES BY API CALL ============================================**/
     private fun getIssues(index: Int, context: Context) = CoroutineScope(Dispatchers.Main).launch {
 
         //API will not be called on 0 issues

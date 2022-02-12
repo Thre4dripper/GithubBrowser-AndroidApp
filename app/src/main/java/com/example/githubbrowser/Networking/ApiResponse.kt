@@ -17,19 +17,21 @@ class ApiResponse {
     companion object {
         private const val BASE_URL = "https://api.github.com/repos/"
 
-
+        /**============================== METHOD FOR GETTING REPO DETAILS BY API RESPONSE =================================**/
         fun getRepoInfo(owner: String, repoName: String): RepoItem? {
             val response = getJsonResponse("$BASE_URL$owner/$repoName") ?: return null
 
             return JsonParser.repoDetailsJsonParser(response.toString())
         }
 
+        /**============================== METHOD FOR GETTING BRANCHES LIST BY API RESPONSE ================================**/
         fun getBranchesList(owner: String, repoName: String): MutableList<String>? {
             val response = getJsonResponse("$BASE_URL$owner/$repoName/branches") ?: return null
 
             return JsonParser.branchesListJsonParser(response.toString())
         }
 
+        /**================================ METHOD FOR GETTING ISSUES LIST BY API RESPONSE =================================**/
         fun getIssuesList(owner: String, repoName: String): MutableList<IssueItem>? {
             val response =
                 getJsonResponse("$BASE_URL$owner/$repoName/issues?state=open&per_page=100000")
@@ -38,6 +40,7 @@ class ApiResponse {
             return JsonParser.issuesListJsonParser(response.toString())
         }
 
+        /**================================= METHOD FOR GETTING COMMITS LIST BY API RESPONSE ==============================**/
         fun getCommitsList(
             owner: String,
             repoName: String,
@@ -49,6 +52,7 @@ class ApiResponse {
             return JsonParser.commitsListJsonParser(response.toString())
         }
 
+        /**=========================================== METHOD FOR API CALLING BY URL ============================================**/
         private fun getJsonResponse(apiUrl: String): StringBuilder? {
 
             val response = StringBuilder()

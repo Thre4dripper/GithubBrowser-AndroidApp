@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
         const val REPO_CARD_KEY: String = "repo.card.onclick"
     }
 
+    /**========================================================== ON CREATE =========================================================**/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -39,8 +40,10 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
 
     /**========================================== METHOD FOR STARTING ADD REPO ACTIVITY ========================================**/
     private fun addRepoActivity() {
-        val intent = Intent(this, AddRepoActivity::class.java)
-        startActivity(intent)
+        HomeViewModel.reposList.add(RepoItem("Owner", "Name", "Desc", "url", 25))
+        HomeViewModel.adapter.notifyItemInserted(HomeViewModel.reposList.size)
+//        val intent = Intent(this, AddRepoActivity::class.java)
+//        startActivity(intent)
     }
 
     /**============================================ ONCLICK METHOD FOR REPO CARDS ========================================**/

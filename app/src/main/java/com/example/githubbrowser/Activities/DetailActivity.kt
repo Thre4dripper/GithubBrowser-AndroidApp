@@ -19,6 +19,7 @@ class DetailActivity : AppCompatActivity() {
     private var selectedColor = Color.parseColor("#78909C")
     private var unSelectedColor = Color.WHITE
 
+    /**========================================================== ON CREATE =========================================================**/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
@@ -33,7 +34,7 @@ class DetailActivity : AppCompatActivity() {
         setFragments()
     }
 
-    /**================================== METHOD FOR SETTING REPO NAME AND DESC =========================================**/
+    /**================================= METHOD FOR SETTING REPO NAME, DESC AND ISSUES COUNT ==============================**/
     private fun setDetails(index: Int) {
         binding.detailsRepoNameText.text = Html.fromHtml(
             "<b>" + getString(R.string.details_repo_name) + "</b> " +
@@ -51,7 +52,7 @@ class DetailActivity : AppCompatActivity() {
         )
     }
 
-    /**============================================== METHOD FOR FRAGMENT TRANSACTIONS ==========================================**/
+    /**============================================ METHOD FOR FRAGMENT TRANSACTIONS ========================================**/
     private fun setFragments() {
         var fragment: Fragment = BranchesFragment()
         supportFragmentManager.beginTransaction().replace(R.id.branch_frame_layout, fragment)

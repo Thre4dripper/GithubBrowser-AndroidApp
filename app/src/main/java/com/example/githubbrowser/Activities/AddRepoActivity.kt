@@ -20,14 +20,18 @@ import kotlinx.coroutines.launch
 class AddRepoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddRepoBinding
+
+    /**========================================================== ON CREATE =========================================================**/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_repo)
 
         binding.addRepoButton.setOnClickListener {
+
+            //Network Check
             if (checkForInternet(this))
                 addRepo()
-            else Toast.makeText(this, getString(R.string.time_out), Toast.LENGTH_LONG).show()
+            else Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
         }
 
         binding.backButtonAddRepo.setOnClickListener {
