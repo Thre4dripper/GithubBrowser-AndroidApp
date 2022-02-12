@@ -1,5 +1,6 @@
 package com.example.githubbrowser.Activities
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,9 @@ import com.example.githubbrowser.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
+
+    private var selectedColor = Color.GRAY
+    private var unSelectedColor = Color.WHITE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +47,30 @@ class DetailActivity : AppCompatActivity() {
         )
     }
 
+    /**============================================== METHOD FOR FRAGMENT TRANSACTIONS ==========================================**/
     private fun setFragments(index: Int) {
-        val fragment = BranchesFragment(index)
+        var fragment = BranchesFragment(index)
         supportFragmentManager.beginTransaction().replace(R.id.branch_frame_layout, fragment)
             .commit()
+
+        binding.detailsBranchCardView.setBackgroundColor(selectedColor)
+
+        binding.detailsBranchCardView.setOnClickListener {
+            fragment = BranchesFragment(index)
+            supportFragmentManager.beginTransaction().replace(R.id.branch_frame_layout, fragment)
+                .commit()
+
+            binding.detailsBranchCardView.setBackgroundColor(selectedColor)
+            binding.detailsIssuesCardView.setBackgroundColor(unSelectedColor)
+        }
+
+        binding.detailsIssuesCardView.setOnClickListener {
+            fragment = BranchesFragment(index)
+            supportFragmentManager.beginTransaction().replace(R.id.branch_frame_layout, fragment)
+                .commit()
+
+            binding.detailsBranchCardView.setBackgroundColor(unSelectedColor)
+            binding.detailsIssuesCardView.setBackgroundColor(selectedColor)
+        }
     }
 }

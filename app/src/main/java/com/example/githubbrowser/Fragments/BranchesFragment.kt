@@ -1,5 +1,6 @@
 package com.example.githubbrowser.Fragments
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +35,12 @@ class BranchesFragment(private val index: Int) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.branchRv.layoutManager = LinearLayoutManager(requireContext() as Activity)
+        binding.branchRv.addItemDecoration(DividerItemDecoration(requireContext(),LinearLayout.VERTICAL))
+        BranchFragmentViewModel.adapter =
+            BranchesRecyclerAdapter(BranchFragmentViewModel.branchesList)
+
+
         getBranches(index)
     }
 
@@ -48,10 +55,7 @@ class BranchesFragment(private val index: Int) : Fragment() {
         //getting response
         task.await()
 
-        binding.branchRv.layoutManager = LinearLayoutManager(requireContext())
-        binding.branchRv.addItemDecoration(DividerItemDecoration(requireContext(),LinearLayout.VERTICAL))
-        BranchFragmentViewModel.adapter =
-            BranchesRecyclerAdapter(BranchFragmentViewModel.branchesList)
         binding.branchRv.adapter = BranchFragmentViewModel.adapter
+   //     BranchFragmentViewModel.adapter.notifyDataSetChanged()
     }
 }
