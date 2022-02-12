@@ -63,6 +63,11 @@ class AddRepoActivity : AppCompatActivity() {
             //API Response validity Check
             if (result == null) {
                 binding.repoNameTextLayout.error = getString(R.string.repo_not_found)
+                Toast.makeText(
+                    this@AddRepoActivity,
+                    "or Check Network Connectivity",
+                    Toast.LENGTH_LONG
+                ).show()
             } else {
                 binding.repoNameTextLayout.error = null
                 HomeViewModel.adapter.notifyItemInserted(HomeViewModel.reposList.size)
@@ -77,24 +82,27 @@ class AddRepoActivity : AppCompatActivity() {
     }
 
     /**====================================== METHOD FOR CHECKING INTERNET CONNECTIVITY =========================================**/
-    private fun checkForInternet(context: Context): Boolean {
+    companion object {
+        fun checkForInternet(context: Context): Boolean {
 
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val network = connectivityManager.activeNetwork ?: return false
-            val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val network = connectivityManager.activeNetwork ?: return false
+                val activeNetwork =
+                    connectivityManager.getNetworkCapabilities(network) ?: return false
 
-            return when {
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                else -> false
+                return when {
+                    activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                    activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                    else -> false
+                }
+            } else {
+                @Suppress("DEPRECATION") val networkInfo =
+                    connectivityManager.activeNetworkInfo ?: return false
+                @Suppress("DEPRECATION") return networkInfo.isConnected
             }
-        } else {
-            @Suppress("DEPRECATION") val networkInfo =
-                connectivityManager.activeNetworkInfo ?: return false
-            @Suppress("DEPRECATION") return networkInfo.isConnected
         }
     }
 }

@@ -9,13 +9,13 @@ class CommitsViewModel {
         var selectedBranch: Int = -1
         lateinit var commitsAdapter: CommitsRecyclerAdapter
 
-        var commitsList: MutableList<CommitItem> = mutableListOf()
+        var commitsList: MutableList<CommitItem>? = mutableListOf()
 
         fun getCommitsList(
             owner: String,
             repoName: String,
             branch: String
-        ): MutableList<CommitItem> {
+        ): MutableList<CommitItem>? {
             commitsList = ApiResponse.getCommitsList(owner, repoName, branch)
             return commitsList
         }

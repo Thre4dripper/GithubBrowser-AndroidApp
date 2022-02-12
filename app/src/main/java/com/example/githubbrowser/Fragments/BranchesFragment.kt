@@ -8,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.githubbrowser.Activities.AddRepoActivity
 import com.example.githubbrowser.Activities.CommitsActivity
 import com.example.githubbrowser.Activities.DetailActivity
 import com.example.githubbrowser.Adapters.BranchesRecyclerAdapter
@@ -48,14 +50,16 @@ class BranchesFragment : Fragment(), BranchesRecyclerAdapter.BranchClickInterfac
 
         val context = requireContext() as Activity
         binding.branchRv.layoutManager = LinearLayoutManager(context)
-        getBranches(DetailsViewModel.selectedRepo, context)
+        if (AddRepoActivity.checkForInternet(context))
+            getBranches(DetailsViewModel.selectedRepo, context)
+        else Toast.makeText(context, "No Internet Connection", Toast.LENGTH_LONG).show()
     }
 
     private fun getBranches(index: Int, context: Context) =
         CoroutineScope(Dispatchers.Main).launch {
 
             //API is only called first time
-            if (DetailsViewModel.branchesList.size == 0) {
+            if (DetailsViewModel.branchesList!!.size == 0) {
                 binding.branchLoadingProgressView.visibility = View.VISIBLE
                 binding.branchLoadingTextView.visibility = View.VISIBLE
                 //sending api call
@@ -67,9 +71,14 @@ class BranchesFragment : Fragment(), BranchesRecyclerAdapter.BranchClickInterfac
                 }
 
                 //getting response
-                task.await()
+                val result = task.await()
+                if (result == null) {
+                    binding.branchLoadingTextView.text = "Time out!!!, Slow Network"
+                } else {
+                    binding.branchLoadingTextView.visibility = View.GONE
+                }
                 binding.branchLoadingProgressView.visibility = View.GONE
-                binding.branchLoadingTextView.visibility = View.GONE
+
             }
 
             binding.branchRv.addItemDecoration(
@@ -80,7 +89,7 @@ class BranchesFragment : Fragment(), BranchesRecyclerAdapter.BranchClickInterfac
             )
 
             DetailsViewModel.branchesAdapter =
-                BranchesRecyclerAdapter(DetailsViewModel.branchesList, this@BranchesFragment)
+                BranchesRecyclerAdapter(DetailsViewModel.branchesList!!, this@BranchesFragment)
             binding.branchRv.adapter = DetailsViewModel.branchesAdapter
         }
 

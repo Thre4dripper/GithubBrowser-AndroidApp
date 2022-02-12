@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,21 +37,23 @@ class CommitsActivity : AppCompatActivity() {
             super.onBackPressed()
         }
 
-        binding.commitsBranchName.text = DetailsViewModel.branchesList[branchIndex]
+        binding.commitsBranchName.text = DetailsViewModel.branchesList!![branchIndex]
 
         setRecyclerView()
     }
 
     private fun setRecyclerView() {
         binding.commitsRv.layoutManager = LinearLayoutManager(this)
-        getCommits(CommitsViewModel.selectedBranch, this)
+        if (AddRepoActivity.checkForInternet(this))
+            getCommits(CommitsViewModel.selectedBranch, this)
+        else Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show()
     }
 
     private fun getCommits(index: Int, context: Context) =
         CoroutineScope(Dispatchers.Main).launch {
 
             //API is only called first time
-            if (CommitsViewModel.commitsList.size == 0) {
+            if (CommitsViewModel.commitsList!!.size == 0) {
                 binding.commitsLoadingProgressView.visibility = View.VISIBLE
                 binding.commitsLoadingTextView.visibility = View.VISIBLE
                 //sending api call
@@ -58,18 +61,23 @@ class CommitsActivity : AppCompatActivity() {
                     CommitsViewModel.getCommitsList(
                         HomeViewModel.reposList[index].repoOwner,
                         HomeViewModel.reposList[index].repoName,
-                        DetailsViewModel.branchesList[index]
+                        DetailsViewModel.branchesList!![index]
                     )
                 }
 
                 //getting response
-                task.await()
+                val result = task.await()
+
+                if (result == null) {
+                    binding.commitsLoadingTextView.text = "Time out!!!, Slow Network"
+                } else {
+                    binding.commitsLoadingTextView.visibility = View.GONE
+                }
                 binding.commitsLoadingProgressView.visibility = View.GONE
-                binding.commitsLoadingTextView.visibility = View.GONE
             }
 
             CommitsViewModel.commitsAdapter =
-                CommitsRecyclerAdapter(CommitsViewModel.commitsList)
+                CommitsRecyclerAdapter(CommitsViewModel.commitsList!!)
             binding.commitsRv.adapter = CommitsViewModel.commitsAdapter
         }
 }

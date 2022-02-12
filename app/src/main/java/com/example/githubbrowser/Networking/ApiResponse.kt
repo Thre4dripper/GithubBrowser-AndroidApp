@@ -24,15 +24,16 @@ class ApiResponse {
             return JsonParser.repoDetailsJsonParser(response.toString())
         }
 
-        fun getBranchesList(owner: String, repoName: String): MutableList<String> {
-            val response = getJsonResponse("$BASE_URL$owner/$repoName/branches")
+        fun getBranchesList(owner: String, repoName: String): MutableList<String>? {
+            val response = getJsonResponse("$BASE_URL$owner/$repoName/branches") ?: return null
 
             return JsonParser.branchesListJsonParser(response.toString())
         }
 
-        fun getIssuesList(owner: String, repoName: String): MutableList<IssueItem> {
+        fun getIssuesList(owner: String, repoName: String): MutableList<IssueItem>? {
             val response =
                 getJsonResponse("$BASE_URL$owner/$repoName/issues?state=open&per_page=100000")
+                    ?: return null
 
             return JsonParser.issuesListJsonParser(response.toString())
         }
@@ -41,9 +42,9 @@ class ApiResponse {
             owner: String,
             repoName: String,
             branch: String
-        ): MutableList<CommitItem> {
+        ): MutableList<CommitItem>? {
             val response =
-                getJsonResponse("$BASE_URL$owner/$repoName/commits?sha=$branch")
+                getJsonResponse("$BASE_URL$owner/$repoName/commits?sha=$branch") ?: return null
 
             return JsonParser.commitsListJsonParser(response.toString())
         }
@@ -87,6 +88,7 @@ class ApiResponse {
                         inputStream.close()
                     } catch (e: IOException) {
                         e.printStackTrace()
+                        return null
                     }
                 }
             }
