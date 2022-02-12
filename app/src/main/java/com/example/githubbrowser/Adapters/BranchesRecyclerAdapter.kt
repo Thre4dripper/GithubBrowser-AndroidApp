@@ -17,22 +17,23 @@ class BranchesRecyclerAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_branch_name, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view,branchClickInterface)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.branchName.text = branchList[position]
-        holder.branchCard.setOnClickListener {
-            branchClickInterface.branchOnClick(position)
-        }
     }
 
     override fun getItemCount() = branchList.size
 
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View,private val branchClickInterface: BranchClickInterface) : RecyclerView.ViewHolder(itemView) {
         var branchName = itemView.findViewById<TextView>(R.id.branch_name_text_view)!!
-        var branchCard = itemView.findViewById<ConstraintLayout>(R.id.branch_card)!!
+        private var branchCard = itemView.findViewById<ConstraintLayout>(R.id.branch_card)!!
+
+        init {
+            branchCard.setOnClickListener { branchClickInterface.branchOnClick(adapterPosition) }
+        }
     }
 
     interface BranchClickInterface {

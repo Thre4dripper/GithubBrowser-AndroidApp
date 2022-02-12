@@ -23,6 +23,33 @@
             app:layout_constraintStart_toEndOf="@+id/back_button_details"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/delete_repo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/desc_delete_repo"
+            android:focusable="true"
+            android:src="@drawable/ic_delete_repo"
+            app:layout_constraintBottom_toBottomOf="@+id/open_repo_link_button"
+            app:layout_constraintEnd_toStartOf="@+id/open_repo_link_button"
+            app:layout_constraintTop_toTopOf="@+id/open_repo_link_button" />
+
+        <ImageView
+            android:id="@+id/open_repo_link_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/desc_open_repo"
+            android:focusable="true"
+            android:src="@drawable/ic_open_repo_link"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/details_repo_name_text"
             android:layout_width="0dp"

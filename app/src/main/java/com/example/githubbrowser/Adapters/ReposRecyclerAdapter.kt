@@ -22,7 +22,7 @@ class ReposRecyclerAdapter(
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_repo_card, parent, false)
 
-        return ViewHolder(view)
+        return ViewHolder(view, homeOnClickInterface)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -33,18 +33,22 @@ class ReposRecyclerAdapter(
         else holder.repoDesc.text = Html.fromHtml("<em>No Description</em>")
 
         Glide.with(holder.image.context).load(repoItem.imgUrl).circleCrop().into(holder.image)
-        holder.repoCard.setOnClickListener {
-            homeOnClickInterface.repoClick(position)
-        }
     }
 
     override fun getItemCount() = repoList.size
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View, private val homeOnClickInterface: HomeOnClickInterface) :
+        RecyclerView.ViewHolder(itemView) {
         var repoName = itemView.findViewById<TextView>(R.id.repo_name)!!
         var repoDesc = itemView.findViewById<TextView>(R.id.repo_desc)!!
         var image = itemView.findViewById<ImageView>(R.id.repo_owner_avatar)!!
-        var repoCard = itemView.findViewById<CardView>(R.id.repo_card)!!
+        private var repoCard = itemView.findViewById<CardView>(R.id.repo_card)!!
+
+        init {
+            repoCard.setOnClickListener {
+                homeOnClickInterface.repoClick(adapterPosition)
+            }
+        }
     }
 
     interface HomeOnClickInterface {

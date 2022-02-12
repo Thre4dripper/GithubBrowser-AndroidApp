@@ -34,6 +34,8 @@
     <string name="details_repo_desc">Description:</string>
     <string name="details_branch_text">BRANCHES</string>
     <string name="details_issues_text">ISSUES(%s)</string>
+    <string name="desc_delete_repo">Delete Repo Button</string>
+    <string name="desc_open_repo">Open Repo Link Button</string>
 
     //branch fragment
     <string name="placeholder_branch_name">Branch Name</string>

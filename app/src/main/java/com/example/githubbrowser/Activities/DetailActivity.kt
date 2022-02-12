@@ -24,9 +24,7 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
 
-        binding.backButtonDetails.setOnClickListener {
-            super.onBackPressed()
-        }
+        binding.backButtonDetails.setOnClickListener { super.onBackPressed() }
 
         val repoCardIndex: Int = intent.getIntExtra(MainActivity.REPO_CARD_KEY, -1)
         DetailsViewModel.selectedRepo = repoCardIndex
@@ -50,6 +48,9 @@ class DetailActivity : AppCompatActivity() {
             R.string.details_issues_text,
             HomeViewModel.reposList[index].issues.toString()
         )
+
+        binding.deleteRepoButton.setOnClickListener { deleteRepo(index) }
+        binding.openRepoLinkButton.setOnClickListener { openRepo(index) }
     }
 
     /**============================================ METHOD FOR FRAGMENT TRANSACTIONS ========================================**/
@@ -81,5 +82,15 @@ class DetailActivity : AppCompatActivity() {
             binding.detailsIssueTextView.setTextColor(Color.WHITE)
             binding.detailsBranchesTextView.setTextColor(resources.getColor(R.color.text_color))
         }
+    }
+
+    private fun deleteRepo(index: Int) {
+        HomeViewModel.reposList.removeAt(index)
+        HomeViewModel.adapter.notifyItemRemoved(index)
+        finish()
+    }
+
+    private fun openRepo(index: Int) {
+
     }
 }
