@@ -1,7 +1,7 @@
 <resources>
 
     //app name
-    <string name="app_name">GithubClone</string>
+    <string name="app_name">Github Browser</string>
 
     //activities headings
     <string name="github_browser">Github Browser</string>

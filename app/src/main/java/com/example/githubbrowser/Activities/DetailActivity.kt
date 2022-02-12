@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.githubbrowser.Fragments.BranchesFragment
 import com.example.githubbrowser.Fragments.IssuesFragment
 import com.example.githubbrowser.R
+import com.example.githubbrowser.ViewModels.DetailsViewModel
 import com.example.githubbrowser.ViewModels.HomeViewModel
 import com.example.githubbrowser.databinding.ActivityDetailBinding
 
@@ -27,8 +28,9 @@ class DetailActivity : AppCompatActivity() {
         }
 
         val repoCardIndex: Int = intent.getIntExtra("repo.card.onclick", -1)
+        DetailsViewModel.selectedRepo=repoCardIndex
         setDetails(repoCardIndex)
-        setFragments(repoCardIndex)
+        setFragments()
     }
 
     /**================================== METHOD FOR SETTING REPO NAME AND DESC =========================================**/
@@ -50,15 +52,15 @@ class DetailActivity : AppCompatActivity() {
     }
 
     /**============================================== METHOD FOR FRAGMENT TRANSACTIONS ==========================================**/
-    private fun setFragments(index: Int) {
-        var fragment: Fragment = BranchesFragment(index)
+    private fun setFragments() {
+        var fragment: Fragment = BranchesFragment()
         supportFragmentManager.beginTransaction().replace(R.id.branch_frame_layout, fragment)
             .commit()
 
         binding.detailsBranchCardView.setBackgroundColor(selectedColor)
 
         binding.detailsBranchCardView.setOnClickListener {
-            fragment = BranchesFragment(index)
+            fragment = BranchesFragment()
             supportFragmentManager.beginTransaction().replace(R.id.branch_frame_layout, fragment)
                 .commit()
 
@@ -69,7 +71,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         binding.detailsIssuesCardView.setOnClickListener {
-            fragment = IssuesFragment(index)
+            fragment = IssuesFragment()
             supportFragmentManager.beginTransaction().replace(R.id.branch_frame_layout, fragment)
                 .commit()
 

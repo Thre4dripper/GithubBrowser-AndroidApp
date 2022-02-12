@@ -8,6 +8,7 @@ import com.example.githubbrowser.dataModels.IssueItem
 
 class DetailsViewModel {
     companion object {
+        var selectedRepo :Int= -1
         lateinit var branchesAdapter: BranchesRecyclerAdapter
         lateinit var issuesAdapter: IssueRecyclerAdapter
 

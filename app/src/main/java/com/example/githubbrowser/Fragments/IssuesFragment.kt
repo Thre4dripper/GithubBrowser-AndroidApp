@@ -1,6 +1,7 @@
 package com.example.githubbrowser.Fragments
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class IssuesFragment(private val index: Int) : Fragment() {
+class IssuesFragment() : Fragment() {
 
     private val TAG = "IssuesFragment"
     private lateinit var binding: FragmentIssuesBinding
@@ -37,17 +38,22 @@ class IssuesFragment(private val index: Int) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.issueRv.layoutManager = LinearLayoutManager(requireContext() as Activity)
-        getIssues(index)
+        val context = requireContext() as Activity
+        binding.issueRv.layoutManager = LinearLayoutManager(context)
+        getIssues(DetailsViewModel.selectedRepo, context)
     }
 
-    private fun getIssues(index: Int) = CoroutineScope(Dispatchers.Main).launch {
+    private fun getIssues(index: Int, context: Context) = CoroutineScope(Dispatchers.Main).launch {
 
+        //API will not be called on 0 issues
+        if (HomeViewModel.reposList[index].issues == 0) {
+            binding.issuesLoadingTextView.visibility = View.VISIBLE
+            binding.issuesLoadingTextView.text = getString(R.string.no_issues)
+        }
         //API is only called first time
-        if (DetailsViewModel.issuesList.size == 0) {
+        else if (DetailsViewModel.issuesList.size == 0) {
             binding.issuesLoadingProgressView.visibility = View.VISIBLE
             binding.issuesLoadingTextView.visibility = View.VISIBLE
-
             //sending api call
             val task = async(Dispatchers.IO) {
                 DetailsViewModel.getIssuesList(
@@ -60,17 +66,13 @@ class IssuesFragment(private val index: Int) : Fragment() {
             val size = task.await()
 
             binding.issuesLoadingProgressView.visibility = View.GONE
-
-            if (size == 0)
-                binding.issuesLoadingTextView.text = getString(R.string.no_issues)
-            else
-                binding.issuesLoadingTextView.visibility = View.GONE
+            binding.issuesLoadingTextView.visibility = View.GONE
         }
 
 
         binding.issueRv.addItemDecoration(
             DividerItemDecoration(
-                requireContext(),
+                context,
                 LinearLayout.VERTICAL
             )
         )

@@ -1,6 +1,7 @@
 package com.example.githubbrowser.Fragments
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class BranchesFragment(private val index: Int) : Fragment() {
+class BranchesFragment : Fragment() {
 
     private val TAG = "BranchesFragment"
     private lateinit var binding: FragmentBranchesBinding
@@ -37,39 +38,41 @@ class BranchesFragment(private val index: Int) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.branchRv.layoutManager = LinearLayoutManager(requireContext() as Activity)
-        getBranches(index)
+        val context = requireContext() as Activity
+        binding.branchRv.layoutManager = LinearLayoutManager(context)
+        getBranches(DetailsViewModel.selectedRepo, context)
     }
 
-    private fun getBranches(index: Int) = CoroutineScope(Dispatchers.Main).launch {
+    private fun getBranches(index: Int, context: Context) =
+        CoroutineScope(Dispatchers.Main).launch {
 
-        //API is only called first time
-        if (DetailsViewModel.branchesList.size == 0) {
-            binding.branchLoadingProgressView.visibility = View.VISIBLE
-            binding.branchLoadingTextView.visibility = View.VISIBLE
-            //sending api call
-            val task = async(Dispatchers.IO) {
-                DetailsViewModel.getBranchesList(
-                    HomeViewModel.reposList[index].repoOwner,
-                    HomeViewModel.reposList[index].repoName
-                )
+            //API is only called first time
+            if (DetailsViewModel.branchesList.size == 0) {
+                binding.branchLoadingProgressView.visibility = View.VISIBLE
+                binding.branchLoadingTextView.visibility = View.VISIBLE
+                //sending api call
+                val task = async(Dispatchers.IO) {
+                    DetailsViewModel.getBranchesList(
+                        HomeViewModel.reposList[index].repoOwner,
+                        HomeViewModel.reposList[index].repoName
+                    )
+                }
+
+                //getting response
+                task.await()
+                binding.branchLoadingProgressView.visibility = View.GONE
+                binding.branchLoadingTextView.visibility = View.GONE
             }
 
-            //getting response
-            task.await()
-            binding.branchLoadingProgressView.visibility = View.GONE
-            binding.branchLoadingTextView.visibility = View.GONE
-        }
-
-        binding.branchRv.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                LinearLayout.VERTICAL
+            binding.branchRv.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    LinearLayout.VERTICAL
+                )
             )
-        )
 
-        DetailsViewModel.branchesAdapter =
-            BranchesRecyclerAdapter(DetailsViewModel.branchesList)
-        binding.branchRv.adapter = DetailsViewModel.branchesAdapter
-    }
+            DetailsViewModel.branchesAdapter =
+                BranchesRecyclerAdapter(DetailsViewModel.branchesList)
+            binding.branchRv.adapter = DetailsViewModel.branchesAdapter
+        }
 }
