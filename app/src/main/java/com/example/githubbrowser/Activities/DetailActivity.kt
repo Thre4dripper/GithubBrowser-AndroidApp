@@ -27,8 +27,8 @@ class DetailActivity : AppCompatActivity() {
             super.onBackPressed()
         }
 
-        val repoCardIndex: Int = intent.getIntExtra("repo.card.onclick", -1)
-        DetailsViewModel.selectedRepo=repoCardIndex
+        val repoCardIndex: Int = intent.getIntExtra(MainActivity.REPO_CARD_KEY, -1)
+        DetailsViewModel.selectedRepo = repoCardIndex
         setDetails(repoCardIndex)
         setFragments()
     }

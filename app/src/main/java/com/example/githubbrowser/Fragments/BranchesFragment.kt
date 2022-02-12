@@ -2,6 +2,7 @@ package com.example.githubbrowser.Fragments
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.githubbrowser.Activities.CommitsActivity
+import com.example.githubbrowser.Activities.DetailActivity
 import com.example.githubbrowser.Adapters.BranchesRecyclerAdapter
 import com.example.githubbrowser.R
 import com.example.githubbrowser.ViewModels.DetailsViewModel
@@ -21,10 +24,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class BranchesFragment : Fragment() {
+class BranchesFragment : Fragment(), BranchesRecyclerAdapter.BranchClickInterface {
 
     private val TAG = "BranchesFragment"
     private lateinit var binding: FragmentBranchesBinding
+
+    companion object {
+        const val BRANCH_CARD_KEY: String = "branch.card.onclick"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,7 +79,13 @@ class BranchesFragment : Fragment() {
             )
 
             DetailsViewModel.branchesAdapter =
-                BranchesRecyclerAdapter(DetailsViewModel.branchesList)
+                BranchesRecyclerAdapter(DetailsViewModel.branchesList, this@BranchesFragment)
             binding.branchRv.adapter = DetailsViewModel.branchesAdapter
         }
+
+    override fun branchOnClick(position: Int) {
+        val intent = Intent(requireContext(), CommitsActivity::class.java)
+        intent.putExtra(BRANCH_CARD_KEY, position)
+        startActivity(intent)
+    }
 }

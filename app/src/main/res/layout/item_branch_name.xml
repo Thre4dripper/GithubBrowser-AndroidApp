@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:id="@+id/branch_card">
 
     <ImageView
         android:id="@+id/imageView"

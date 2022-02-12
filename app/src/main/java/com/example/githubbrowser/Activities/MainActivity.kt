@@ -15,6 +15,10 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
 
     private lateinit var binding: ActivityMainBinding
 
+    companion object {
+        const val REPO_CARD_KEY:String ="repo.card.onclick"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -46,7 +50,7 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
         DetailsViewModel.issuesList.clear()
 
         val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("repo.card.onclick", position)
+        intent.putExtra(REPO_CARD_KEY, position)
         startActivity(intent)
     }
 }
