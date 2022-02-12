@@ -24,6 +24,6 @@ class BranchesRecyclerAdapter(private var branchList: MutableList<String>) :
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var branchName: TextView = itemView.findViewById(R.id.branch_name_text_view)
+        var branchName = itemView.findViewById<TextView>(R.id.branch_name_text_view)!!
     }
 }

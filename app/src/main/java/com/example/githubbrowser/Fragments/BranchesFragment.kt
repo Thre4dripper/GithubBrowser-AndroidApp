@@ -2,7 +2,6 @@ package com.example.githubbrowser.Fragments
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubbrowser.Adapters.BranchesRecyclerAdapter
 import com.example.githubbrowser.R
-import com.example.githubbrowser.ViewModels.BranchesViewModel
+import com.example.githubbrowser.ViewModels.DetailsViewModel
 import com.example.githubbrowser.ViewModels.HomeViewModel
 import com.example.githubbrowser.databinding.FragmentBranchesBinding
 import kotlinx.coroutines.CoroutineScope
@@ -43,10 +42,10 @@ class BranchesFragment(private val index: Int) : Fragment() {
     private fun getBranches(index: Int) = CoroutineScope(Dispatchers.Main).launch {
 
         //API is only called first time
-        if (BranchesViewModel.branchesList.size == 0) {
+        if (DetailsViewModel.branchesList.size == 0) {
             //sending api call
             val task = async(Dispatchers.IO) {
-                BranchesViewModel.getBranchesList(
+                DetailsViewModel.getBranchesList(
                     HomeViewModel.reposList[index].repoOwner,
                     HomeViewModel.reposList[index].repoName
                 )
@@ -64,8 +63,8 @@ class BranchesFragment(private val index: Int) : Fragment() {
             )
         )
 
-        BranchesViewModel.adapter =
-            BranchesRecyclerAdapter(BranchesViewModel.branchesList)
-        binding.branchRv.adapter = BranchesViewModel.adapter
+        DetailsViewModel.adapter =
+            BranchesRecyclerAdapter(DetailsViewModel.branchesList)
+        binding.branchRv.adapter = DetailsViewModel.adapter
     }
 }
