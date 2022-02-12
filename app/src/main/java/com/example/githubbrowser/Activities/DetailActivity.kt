@@ -64,6 +64,8 @@ class DetailActivity : AppCompatActivity() {
 
             binding.detailsBranchCardView.setBackgroundColor(selectedColor)
             binding.detailsIssuesCardView.setBackgroundColor(unSelectedColor)
+            binding.detailsBranchesTextView.setTextColor(Color.WHITE)
+            binding.detailsIssueTextView.setTextColor(resources.getColor(R.color.text_color))
         }
 
         binding.detailsIssuesCardView.setOnClickListener {
@@ -73,6 +75,8 @@ class DetailActivity : AppCompatActivity() {
 
             binding.detailsBranchCardView.setBackgroundColor(unSelectedColor)
             binding.detailsIssuesCardView.setBackgroundColor(selectedColor)
+            binding.detailsIssueTextView.setTextColor(Color.WHITE)
+            binding.detailsBranchesTextView.setTextColor(resources.getColor(R.color.text_color))
         }
     }
 }

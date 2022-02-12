@@ -26,8 +26,8 @@
     //details activity
     <string name="details_repo_name">Repo Name:</string>
     <string name="details_repo_desc">Description:</string>
-    <string name="details_branch_text">Branch</string>
-    <string name="details_issues_text">Issues(%s)</string>
+    <string name="details_branch_text">BRANCHES</string>
+    <string name="details_issues_text">ISSUES(%s)</string>
 
     //branch fragment
     <string name="placeholder_branch_name">Branch Name</string>

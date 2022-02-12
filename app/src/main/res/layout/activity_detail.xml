@@ -56,13 +56,9 @@
             app:layout_constraintTop_toBottomOf="@+id/details_repo_desc_text">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
-                android:text="@string/details_branch_text"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:id="@+id/details_branches_text_view"
+                style="@style/DetailTabHeadings"
+                android:text="@string/details_branch_text" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -75,13 +71,8 @@
 
             <TextView
                 android:id="@+id/details_issue_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
-                android:text="@string/details_issues_text"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                style="@style/DetailTabHeadings"
+                android:text="@string/details_issues_text" />
         </androidx.cardview.widget.CardView>
 
         <FrameLayout
