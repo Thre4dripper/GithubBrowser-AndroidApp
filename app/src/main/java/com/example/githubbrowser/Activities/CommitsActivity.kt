@@ -46,7 +46,7 @@ class CommitsActivity : AppCompatActivity() {
         binding.commitsRv.layoutManager = LinearLayoutManager(this)
         if (AddRepoActivity.checkForInternet(this))
             getCommits(CommitsViewModel.selectedBranch, this)
-        else Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show()
+        else Toast.makeText(this, getString(R.string.time_out), Toast.LENGTH_LONG).show()
     }
 
     private fun getCommits(index: Int, context: Context) =
@@ -69,7 +69,7 @@ class CommitsActivity : AppCompatActivity() {
                 val result = task.await()
 
                 if (result == null) {
-                    binding.commitsLoadingTextView.text = "Time out!!!, Slow Network"
+                    binding.commitsLoadingTextView.text = getString(R.string.time_out)
                     binding.commitsLoadingProgressView.visibility = View.GONE
 
                     //resetting list for recall api req in case on time out

@@ -52,7 +52,7 @@ class BranchesFragment : Fragment(), BranchesRecyclerAdapter.BranchClickInterfac
         binding.branchRv.layoutManager = LinearLayoutManager(context)
         if (AddRepoActivity.checkForInternet(context))
             getBranches(DetailsViewModel.selectedRepo, context)
-        else Toast.makeText(context, "No Internet Connection", Toast.LENGTH_LONG).show()
+        else Toast.makeText(context, getString(R.string.time_out), Toast.LENGTH_LONG).show()
     }
 
     private fun getBranches(index: Int, context: Context) =
@@ -73,7 +73,7 @@ class BranchesFragment : Fragment(), BranchesRecyclerAdapter.BranchClickInterfac
                 //getting response
                 val result = task.await()
                 if (result == null) {
-                    binding.branchLoadingTextView.text = "Time out!!!, Slow Network"
+                    binding.branchLoadingTextView.text = getString(R.string.time_out)
                     binding.branchLoadingProgressView.visibility = View.GONE
 
                     //resetting list for recall api req in case on time out

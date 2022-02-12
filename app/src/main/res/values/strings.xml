@@ -3,6 +3,10 @@
     //app name
     <string name="app_name">Github Browser</string>
 
+    //general strings
+    <string name="time_out">Time Out, Slow Network</string>
+    <string name="check_network">or Check Network Connectivity</string>
+
     //activities headings
     <string name="github_browser">Github Browser</string>
     <string name="add_repo">Add Repo</string>
@@ -22,7 +26,7 @@
     <string name="owner_organization">Owner/Organization</string>
     <string name="repo_name">Repo Name</string>
     <string name="add_repo_button">ADD REPO</string>
-    <string name="repo_not_found">Repo Doesn\'t Exist</string>
+    <string name="repo_not_found">Invalid Repo</string>
 
     //details activity
     <string name="details_repo_name">Repo Name:</string>

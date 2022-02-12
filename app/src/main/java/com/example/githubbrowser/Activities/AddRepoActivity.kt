@@ -27,7 +27,7 @@ class AddRepoActivity : AppCompatActivity() {
         binding.addRepoButton.setOnClickListener {
             if (checkForInternet(this))
                 addRepo()
-            else Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show()
+            else Toast.makeText(this, getString(R.string.time_out), Toast.LENGTH_LONG).show()
         }
 
         binding.backButtonAddRepo.setOnClickListener {
@@ -65,7 +65,7 @@ class AddRepoActivity : AppCompatActivity() {
                 binding.repoNameTextLayout.error = getString(R.string.repo_not_found)
                 Toast.makeText(
                     this@AddRepoActivity,
-                    "or Check Network Connectivity",
+                    getString(R.string.check_network),
                     Toast.LENGTH_LONG
                 ).show()
             } else {

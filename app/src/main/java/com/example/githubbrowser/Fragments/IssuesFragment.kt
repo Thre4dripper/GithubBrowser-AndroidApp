@@ -44,7 +44,7 @@ class IssuesFragment() : Fragment() {
         binding.issueRv.layoutManager = LinearLayoutManager(context)
         if (AddRepoActivity.checkForInternet(context))
             getIssues(DetailsViewModel.selectedRepo, context)
-        else Toast.makeText(context, "No Internet Connection", Toast.LENGTH_LONG).show()
+        else Toast.makeText(context, getString(R.string.time_out), Toast.LENGTH_LONG).show()
     }
 
     private fun getIssues(index: Int, context: Context) = CoroutineScope(Dispatchers.Main).launch {
@@ -69,7 +69,7 @@ class IssuesFragment() : Fragment() {
             //getting response
             val result = task.await()
             if (result == null) {
-                binding.issuesLoadingTextView.text = "Time out!!!, Slow Network"
+                binding.issuesLoadingTextView.text = getString(R.string.time_out)
                 binding.issuesLoadingProgressView.visibility = View.GONE
 
                 //resetting list for recall api req in case on time out
