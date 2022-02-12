@@ -37,9 +37,13 @@ class ApiResponse {
             return JsonParser.issuesListJsonParser(response.toString())
         }
 
-        fun getCommitsList(owner: String, repoName: String): MutableList<CommitItem> {
+        fun getCommitsList(
+            owner: String,
+            repoName: String,
+            branch: String
+        ): MutableList<CommitItem> {
             val response =
-                getJsonResponse("$BASE_URL$owner/$repoName/commits")
+                getJsonResponse("$BASE_URL$owner/$repoName/commits?sha=$branch")
 
             return JsonParser.commitsListJsonParser(response.toString())
         }

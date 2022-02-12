@@ -78,6 +78,7 @@ class JsonParser {
                 )
             }
 
+            println(commitsList)
             return commitsList
         }
     }
