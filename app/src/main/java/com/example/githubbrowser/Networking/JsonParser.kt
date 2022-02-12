@@ -1,5 +1,6 @@
 package com.example.githubbrowser.Networking
 
+import com.example.githubbrowser.dataModels.CommitItem
 import com.example.githubbrowser.dataModels.IssueItem
 import com.example.githubbrowser.dataModels.RepoItem
 import org.json.JSONArray
@@ -46,6 +47,38 @@ class JsonParser {
                 issuesList.add(IssueItem(issueTitle, issuerAvatar, issuerName))
             }
             return issuesList
+        }
+
+        fun commitsListJsonParser(jsonResponse: String): MutableList<CommitItem> {
+            val rootObject = JSONArray(jsonResponse)
+
+            val commitsList: MutableList<CommitItem> = mutableListOf()
+
+            for (i in 0 until rootObject.length()) {
+                val commitDate =
+                    rootObject.getJSONObject(i).getJSONObject("commit").getJSONObject("author")
+                        .getString("date")
+                val shaCode = rootObject.getJSONObject(i).getString("sha")
+                val commitMessage =
+                    rootObject.getJSONObject(i).getJSONObject("commit").getString("message")
+                        .substring(0, 6)
+                val commitUserAvatar =
+                    rootObject.getJSONObject(i).getJSONObject("author").getString("avatar_url")
+                val commitUSerName =
+                    rootObject.getJSONObject(i).getJSONObject("author").getString("login")
+
+                commitsList.add(
+                    CommitItem(
+                        commitDate,
+                        shaCode,
+                        commitMessage,
+                        commitUserAvatar,
+                        commitUSerName
+                    )
+                )
+            }
+
+            return commitsList
         }
     }
 

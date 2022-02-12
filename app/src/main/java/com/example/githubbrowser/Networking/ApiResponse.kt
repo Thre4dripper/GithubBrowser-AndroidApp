@@ -1,5 +1,6 @@
 package com.example.githubbrowser.Networking
 
+import com.example.githubbrowser.dataModels.CommitItem
 import com.example.githubbrowser.dataModels.IssueItem
 import com.example.githubbrowser.dataModels.RepoItem
 import java.io.BufferedReader
@@ -30,9 +31,17 @@ class ApiResponse {
         }
 
         fun getIssuesList(owner: String, repoName: String): MutableList<IssueItem> {
-            val response = getJsonResponse("$BASE_URL$owner/$repoName/issues?state=open&per_page=100000")
+            val response =
+                getJsonResponse("$BASE_URL$owner/$repoName/issues?state=open&per_page=100000")
 
             return JsonParser.issuesListJsonParser(response.toString())
+        }
+
+        fun getCommitsList(owner: String, repoName: String): MutableList<CommitItem> {
+            val response =
+                getJsonResponse("$BASE_URL$owner/$repoName/commits")
+
+            return JsonParser.commitsListJsonParser(response.toString())
         }
 
         private fun getJsonResponse(apiUrl: String): StringBuilder? {
