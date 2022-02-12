@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubBrowser">
         <activity
+            android:name=".Activities.CommitsActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.DetailActivity"
             android:exported="false" />
         <activity
