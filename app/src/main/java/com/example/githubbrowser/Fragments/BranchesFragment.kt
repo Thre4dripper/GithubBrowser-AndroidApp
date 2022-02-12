@@ -2,6 +2,7 @@ package com.example.githubbrowser.Fragments
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ import kotlinx.coroutines.launch
 
 class BranchesFragment(private val index: Int) : Fragment() {
 
+    private val TAG = "BranchesFragment"
     private lateinit var binding: FragmentBranchesBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +37,25 @@ class BranchesFragment(private val index: Int) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getBranches(index)
+    }
+
+    private fun getBranches(index: Int) = CoroutineScope(Dispatchers.Main).launch {
+
+        //API is only called first time
+        if (BranchesViewModel.branchesList.size == 0) {
+            //sending api call
+            val task = async(Dispatchers.IO) {
+                BranchesViewModel.getBranchesList(
+                    HomeViewModel.reposList[index].repoOwner,
+                    HomeViewModel.reposList[index].repoName
+                )
+            }
+
+            //getting response
+            task.await()
+        }
+
         binding.branchRv.layoutManager = LinearLayoutManager(requireContext() as Activity)
         binding.branchRv.addItemDecoration(
             DividerItemDecoration(
@@ -42,25 +63,9 @@ class BranchesFragment(private val index: Int) : Fragment() {
                 LinearLayout.VERTICAL
             )
         )
+
         BranchesViewModel.adapter =
             BranchesRecyclerAdapter(BranchesViewModel.branchesList)
-
-        if (BranchesViewModel.branchesList.size == 0)
-            getBranches(index)
-    }
-
-    private fun getBranches(index: Int) = CoroutineScope(Dispatchers.Main).launch {
-        //sending api call
-        val task = async(Dispatchers.IO) {
-            BranchesViewModel.getBranchesList(
-                HomeViewModel.reposList[index].repoOwner,
-                HomeViewModel.reposList[index].repoName
-            )
-        }
-        //getting response
-        task.await()
-
         binding.branchRv.adapter = BranchesViewModel.adapter
-        //     BranchFragmentViewModel.adapter.notifyDataSetChanged()
     }
 }

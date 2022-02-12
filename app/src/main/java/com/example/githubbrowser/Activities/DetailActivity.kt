@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.example.githubbrowser.Fragments.BranchesFragment
+import com.example.githubbrowser.Fragments.IssuesFragment
 import com.example.githubbrowser.R
 import com.example.githubbrowser.ViewModels.HomeViewModel
 import com.example.githubbrowser.databinding.ActivityDetailBinding
@@ -13,7 +15,7 @@ import com.example.githubbrowser.databinding.ActivityDetailBinding
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
 
-    private var selectedColor = Color.GRAY
+    private var selectedColor = Color.parseColor("#546E7A")
     private var unSelectedColor = Color.WHITE
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +51,7 @@ class DetailActivity : AppCompatActivity() {
 
     /**============================================== METHOD FOR FRAGMENT TRANSACTIONS ==========================================**/
     private fun setFragments(index: Int) {
-        var fragment = BranchesFragment(index)
+        var fragment: Fragment = BranchesFragment(index)
         supportFragmentManager.beginTransaction().replace(R.id.branch_frame_layout, fragment)
             .commit()
 
@@ -65,7 +67,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         binding.detailsIssuesCardView.setOnClickListener {
-            fragment = BranchesFragment(index)
+            fragment = IssuesFragment(index)
             supportFragmentManager.beginTransaction().replace(R.id.branch_frame_layout, fragment)
                 .commit()
 

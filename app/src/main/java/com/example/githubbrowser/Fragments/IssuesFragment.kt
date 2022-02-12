@@ -5,16 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import com.example.githubbrowser.R
+import com.example.githubbrowser.databinding.FragmentBranchesBinding
+import com.example.githubbrowser.databinding.FragmentIssuesBinding
 
-class IssuesFragment : Fragment() {
+class IssuesFragment(private var Index: Int) : Fragment() {
 
+    private lateinit var binding: FragmentIssuesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_issues, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_issues, container, false)
+        return binding.root
     }
 }
