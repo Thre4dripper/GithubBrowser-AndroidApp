@@ -1,5 +1,6 @@
 package com.example.githubbrowser.Networking
 
+import com.example.githubbrowser.dataModels.IssueItem
 import com.example.githubbrowser.dataModels.RepoItem
 import java.io.BufferedReader
 import java.io.IOException
@@ -15,16 +16,23 @@ class ApiResponse {
     companion object {
         private const val BASE_URL = "https://api.github.com/repos/"
 
+
+        fun getRepoInfo(owner: String, repoName: String): RepoItem? {
+            val response = getJsonResponse("$BASE_URL$owner/$repoName") ?: return null
+
+            return JsonParser.repoDetailsJsonParser(response.toString())
+        }
+
         fun getBranchesList(owner: String, repoName: String): MutableList<String> {
             val response = getJsonResponse("$BASE_URL$owner/$repoName/branches")
 
             return JsonParser.branchesListJsonParser(response.toString())
         }
 
-        fun getRepoInfo(owner: String, repoName: String): RepoItem? {
-            val response = getJsonResponse("$BASE_URL$owner/$repoName") ?: return null
+        fun getIssuesList(owner: String, repoName: String): MutableList<IssueItem> {
+            val response = getJsonResponse("$BASE_URL$owner/$repoName/issues")
 
-            return JsonParser.repoDetailsJsonParser(response.toString())
+            return JsonParser.issuesListJsonParser(response.toString())
         }
 
         private fun getJsonResponse(apiUrl: String): StringBuilder? {
