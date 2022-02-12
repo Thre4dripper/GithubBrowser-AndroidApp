@@ -31,6 +31,9 @@
 
     //branch fragment
     <string name="placeholder_branch_name">Branch Name</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    //issue fragment
+    <string name="text_issue_creator">Issue Creator</string>
+    <string name="placeholder_issue">Issue</string>
+    <string name="desc_issue_creator_avatar">Issue Creator Avatar</string>
 </resources>
