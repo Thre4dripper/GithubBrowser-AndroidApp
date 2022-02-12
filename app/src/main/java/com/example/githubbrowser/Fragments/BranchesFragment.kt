@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubbrowser.Adapters.BranchesRecyclerAdapter
 import com.example.githubbrowser.R
-import com.example.githubbrowser.ViewModels.BranchFragmentViewModel
+import com.example.githubbrowser.ViewModels.BranchesViewModel
 import com.example.githubbrowser.ViewModels.HomeViewModel
 import com.example.githubbrowser.databinding.FragmentBranchesBinding
 import kotlinx.coroutines.CoroutineScope
@@ -36,18 +36,23 @@ class BranchesFragment(private val index: Int) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.branchRv.layoutManager = LinearLayoutManager(requireContext() as Activity)
-        binding.branchRv.addItemDecoration(DividerItemDecoration(requireContext(),LinearLayout.VERTICAL))
-        BranchFragmentViewModel.adapter =
-            BranchesRecyclerAdapter(BranchFragmentViewModel.branchesList)
+        binding.branchRv.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                LinearLayout.VERTICAL
+            )
+        )
+        BranchesViewModel.adapter =
+            BranchesRecyclerAdapter(BranchesViewModel.branchesList)
 
-
-        getBranches(index)
+        if (BranchesViewModel.branchesList.size == 0)
+            getBranches(index)
     }
 
     private fun getBranches(index: Int) = CoroutineScope(Dispatchers.Main).launch {
         //sending api call
         val task = async(Dispatchers.IO) {
-            BranchFragmentViewModel.getBranchesList(
+            BranchesViewModel.getBranchesList(
                 HomeViewModel.reposList[index].repoOwner,
                 HomeViewModel.reposList[index].repoName
             )
@@ -55,7 +60,7 @@ class BranchesFragment(private val index: Int) : Fragment() {
         //getting response
         task.await()
 
-        binding.branchRv.adapter = BranchFragmentViewModel.adapter
-   //     BranchFragmentViewModel.adapter.notifyDataSetChanged()
+        binding.branchRv.adapter = BranchesViewModel.adapter
+        //     BranchFragmentViewModel.adapter.notifyDataSetChanged()
     }
 }

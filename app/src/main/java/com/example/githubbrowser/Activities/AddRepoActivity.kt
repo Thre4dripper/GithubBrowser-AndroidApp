@@ -1,16 +1,19 @@
 package com.example.githubbrowser.Activities
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.githubbrowser.R
 import com.example.githubbrowser.ViewModels.HomeViewModel
 import com.example.githubbrowser.databinding.ActivityAddRepoBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -40,6 +43,12 @@ class AddRepoActivity : AppCompatActivity() {
         val owner = binding.ownerTextView.text.toString()
         val repoName = binding.addRepoTextView.text.toString()
 
+        //progress dialogue
+        val progressDialog = ProgressDialog(this@AddRepoActivity)
+        progressDialog.setTitle("Adding Repo")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+
         //fields should not be empty
         if (owner.isNotEmpty() && repoName.isNotEmpty()) {
             binding.ownerTextLayout.error = null
@@ -61,6 +70,8 @@ class AddRepoActivity : AppCompatActivity() {
                 HomeViewModel.adapter.notifyItemInserted(HomeViewModel.reposList.size)
                 finish()
             }
+
+            progressDialog.cancel()
         } else {
             binding.ownerTextLayout.error = "Required*"
             binding.repoNameTextLayout.error = "Required*"

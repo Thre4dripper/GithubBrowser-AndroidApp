@@ -4,7 +4,7 @@ import com.example.githubbrowser.Adapters.BranchesRecyclerAdapter
 
 import com.example.githubbrowser.Networking.ApiResponse
 
-class BranchFragmentViewModel {
+class BranchesViewModel {
     companion object {
         lateinit var adapter: BranchesRecyclerAdapter
         var branchesList: MutableList<String> = mutableListOf()
