@@ -30,8 +30,6 @@
     <string name="details_branch_text">BRANCHES</string>
     <string name="details_issues_text">ISSUES(%s)</string>
 
-    //commits activity
-
     //branch fragment
     <string name="placeholder_branch_name">Branch Name</string>
     <string name="loading_branches">Loading Branches</string>
@@ -42,4 +40,11 @@
     <string name="desc_issue_creator_avatar">Issue Creator Avatar</string>
     <string name="loading_issues">Loading Issues</string>
     <string name="no_issues">No Issues</string>
+
+    //commits activity
+    <string name="placeholder_commit_date">10 Mar 21</string>
+    <string name="placeholder_commit_sha">sha code</string>
+    <string name="placeholder_commit_message">Commit Message</string>
+    <string name="placeholder_commit_user">Commit User</string>
+    <string name="desc_commit_user_avatar">Commit User Image</string>
 </resources>
