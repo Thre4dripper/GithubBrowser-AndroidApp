@@ -68,13 +68,6 @@ class CommitsActivity : AppCompatActivity() {
                 binding.commitsLoadingTextView.visibility = View.GONE
             }
 
-            binding.commitsRv.addItemDecoration(
-                DividerItemDecoration(
-                    context,
-                    LinearLayout.VERTICAL
-                )
-            )
-
             CommitsViewModel.commitsAdapter =
                 CommitsRecyclerAdapter(CommitsViewModel.commitsList)
             binding.commitsRv.adapter = CommitsViewModel.commitsAdapter

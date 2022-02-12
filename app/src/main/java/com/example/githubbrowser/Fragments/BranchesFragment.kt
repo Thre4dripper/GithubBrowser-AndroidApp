@@ -16,6 +16,7 @@ import com.example.githubbrowser.Activities.CommitsActivity
 import com.example.githubbrowser.Activities.DetailActivity
 import com.example.githubbrowser.Adapters.BranchesRecyclerAdapter
 import com.example.githubbrowser.R
+import com.example.githubbrowser.ViewModels.CommitsViewModel
 import com.example.githubbrowser.ViewModels.DetailsViewModel
 import com.example.githubbrowser.ViewModels.HomeViewModel
 import com.example.githubbrowser.databinding.FragmentBranchesBinding
@@ -84,6 +85,8 @@ class BranchesFragment : Fragment(), BranchesRecyclerAdapter.BranchClickInterfac
         }
 
     override fun branchOnClick(position: Int) {
+        CommitsViewModel.commitsList.clear()
+
         val intent = Intent(requireContext(), CommitsActivity::class.java)
         intent.putExtra(BRANCH_CARD_KEY, position)
         startActivity(intent)
