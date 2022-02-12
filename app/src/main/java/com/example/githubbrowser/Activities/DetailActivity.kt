@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.githubbrowser.Fragments.BranchesFragment
 import com.example.githubbrowser.R
 import com.example.githubbrowser.ViewModels.HomeViewModel
 import com.example.githubbrowser.databinding.ActivityDetailBinding
@@ -21,6 +22,7 @@ class DetailActivity : AppCompatActivity() {
 
         val repoCardIndex: Int = intent.getIntExtra("repo.card.onclick", -1)
         setDetails(repoCardIndex)
+        setFragments(repoCardIndex)
     }
 
     /**================================== METHOD FOR SETTING REPO NAME AND DESC =========================================**/
@@ -39,5 +41,11 @@ class DetailActivity : AppCompatActivity() {
             R.string.details_issues_text,
             HomeViewModel.reposList[index].issues.toString()
         )
+    }
+
+    private fun setFragments(index: Int) {
+        val fragment = BranchesFragment(index)
+        supportFragmentManager.beginTransaction().replace(R.id.branch_frame_layout, fragment)
+            .commit()
     }
 }

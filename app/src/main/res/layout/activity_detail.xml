@@ -88,7 +88,8 @@
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
 
-        <androidx.fragment.app.FragmentContainerView
+        <FrameLayout
+            android:id="@+id/branch_frame_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
