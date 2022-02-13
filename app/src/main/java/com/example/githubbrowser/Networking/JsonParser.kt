@@ -1,5 +1,6 @@
 package com.example.githubbrowser.Networking
 
+import com.example.githubbrowser.ViewModels.HomeViewModel
 import com.example.githubbrowser.dataModels.CommitItem
 import com.example.githubbrowser.dataModels.IssueItem
 import com.example.githubbrowser.dataModels.RepoItem
@@ -8,7 +9,6 @@ import org.json.JSONObject
 
 class JsonParser {
     companion object {
-        private var databaseIndex = 1
 
         /**================================== JSON PARSER FOR API RESPONSE OF REPO DETAILS =====================================**/
         fun repoDetailsJsonParser(jsonResponse: String): RepoItem {
@@ -20,7 +20,7 @@ class JsonParser {
             val avatar = rootObject.getJSONObject("owner").getString("avatar_url")
             val issues = rootObject.getInt("open_issues")
             return RepoItem(
-                databaseIndex++,
+                HomeViewModel.lastDataBaseID++,
                 repoOwner,
                 repoName,
                 repoDesc,

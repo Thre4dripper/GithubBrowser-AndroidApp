@@ -61,9 +61,13 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
                     )
                 )
 
-            HomeViewModel.reposList.addAll(repoDetailsList)
-            HomeViewModel.repoCount.value = HomeViewModel.repoCount.value!! + repoDetailsList.size
-            HomeViewModel.adapter.notifyItemRangeInserted(0, repoDetailsList.size)
+            if (repoDetailsList.size > 0) {
+                HomeViewModel.reposList.addAll(repoDetailsList)
+                HomeViewModel.repoCount.value =
+                    HomeViewModel.repoCount.value!! + repoDetailsList.size
+                HomeViewModel.adapter.notifyItemRangeInserted(0, repoDetailsList.size)
+                HomeViewModel.lastDataBaseID = repoDetailsList[repoDetailsList.size - 1].id + 1
+            }
         }
     }
 
