@@ -5,13 +5,13 @@ This is simple **Github Browsing Android App**. That can display all the Branche
 When you first open the app, it will ask you to insert a repo to track its details from a Add Repo Screen. This screen will also verify whether that repo is valid or not and show all the errors related to the input.
 
 > **Valid Input Example:**- 
->Owner/Organization: torvalds
+> Owner/Organization: torvalds
 > Repo Name: linux
 > 
->or 
+> or 
 >
->Owner/Organization: google
->Repo Name: retrofit
+> Owner/Organization: google
+> Repo Name: retrofit
 
 
 After adding the repo it will be added to a offline database and saved for later use. The repo card will also shows a **send icon**, that will send its details like Repo Name, description and link to that repo to other text based apps like **Whatsapp**, **Gmail**, etc...
