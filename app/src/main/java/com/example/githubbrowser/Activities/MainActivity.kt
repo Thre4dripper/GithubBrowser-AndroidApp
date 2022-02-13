@@ -39,15 +39,16 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
 
         initializeRecyclerView()
         initializeHintLayouts()
-        getFromDatabase()
+
+        if (HomeViewModel.reposList.size == 0)
+            getFromDatabase()
     }
 
     /**===================================== METHOD FOR INITIALIZING HINT LAYOUTS ==============================================**/
     private fun initializeHintLayouts() {
         binding.addRepoButton2.setOnClickListener { addRepoActivity() }
 
-        HomeViewModel.repoCount.value = 0
-        HomeViewModel.repoCount.observe(this, Observer {
+        HomeViewModel.repoCount.observe(this) {
             if (it == 0) {
                 binding.trackRepoTextView.visibility = View.VISIBLE
                 binding.addRepoButton2.visibility = View.VISIBLE
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
                 binding.trackRepoTextView.visibility = View.GONE
                 binding.addRepoButton2.visibility = View.GONE
             }
-        })
+        }
     }
 
     /**========================================== METHOD FOR INITIALIZING RECYCLER VIEW ========================================**/

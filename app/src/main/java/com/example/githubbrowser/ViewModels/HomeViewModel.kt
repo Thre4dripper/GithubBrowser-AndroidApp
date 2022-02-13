@@ -11,8 +11,8 @@ class HomeViewModel {
     companion object {
         lateinit var adapter: ReposRecyclerAdapter
         var reposList: MutableList<RepoItem> = mutableListOf()
-        var repoCount = MutableLiveData<Int>()
-        var lastDataBaseID = 1;
+        var repoCount = MutableLiveData(0)
+        var lastDataBaseID = 1
 
         fun addNewRepo(owner: String, repoName: String): RepoItem? {
             val repoItem = ApiResponse.getRepoInfo(owner, repoName)
