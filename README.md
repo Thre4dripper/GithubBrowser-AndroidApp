@@ -4,7 +4,7 @@ This is simple **Github Browsing Android App**. That can display all the Branche
 ### Instruction
 When you first open the app, it will ask you to insert a repo to track its details from a Add Repo Screen. This screen will also verify whether that repo is valid or not and show all the errors related to the input.
 
-> **Valid Input Example:-** 
+> ### Valid Input Example:-
 >Owner/Organization: torvalds
 >Repo Name: linux
 > 
