@@ -91,6 +91,7 @@ class AddRepoActivity : AppCompatActivity() {
         }
     }
 
+    /**========================================= METHOD FOR INSERTING REPO IN DATABASE =============================================**/
     private fun insertDataIntoDatabase() {
 
         val repoItem = HomeViewModel.reposList[HomeViewModel.reposList.size - 1]

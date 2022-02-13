@@ -43,6 +43,7 @@ class CommitsRecyclerAdapter(private val commitsList: MutableList<CommitItem>) :
         val committerName = itemView.findViewById<TextView>(R.id.committer_name_text_view)!!
     }
 
+    /**======================================= METHOD FOR PARSING DATE INTO READABLE FORMAT =================================**/
     private fun parseDate(dateString: String): String {
         val year = dateString.substring(0, 4)
         var month = dateString.substring(5, 7)

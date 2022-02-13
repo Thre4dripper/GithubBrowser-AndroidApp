@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
-    app:cardElevation="5dp">
+    app:cardElevation="8dp"
+    app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,9 +23,14 @@
         <TextView
             android:id="@+id/commit_sha_text_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_height="0dp"
+            android:gravity="center"
             android:text="@string/placeholder_commit_sha"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:background="#71B574"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +39,7 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_margin="4dp"
-            android:background="#CFD8DC"
+            android:background="#E4EAEC"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

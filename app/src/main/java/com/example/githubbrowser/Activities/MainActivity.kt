@@ -42,6 +42,36 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
         getFromDatabase()
     }
 
+    /**===================================== METHOD FOR INITIALIZING HINT LAYOUTS ==============================================**/
+    private fun initializeHintLayouts() {
+        binding.addRepoButton2.setOnClickListener { addRepoActivity() }
+
+        HomeViewModel.repoCount.value = 0
+        HomeViewModel.repoCount.observe(this, Observer {
+            if (it == 0) {
+                binding.trackRepoTextView.visibility = View.VISIBLE
+                binding.addRepoButton2.visibility = View.VISIBLE
+            } else {
+                binding.trackRepoTextView.visibility = View.GONE
+                binding.addRepoButton2.visibility = View.GONE
+            }
+        })
+    }
+
+    /**========================================== METHOD FOR INITIALIZING RECYCLER VIEW ========================================**/
+    private fun initializeRecyclerView() {
+        binding.homeRv.layoutManager = LinearLayoutManager(this)
+        HomeViewModel.adapter = ReposRecyclerAdapter(HomeViewModel.reposList, this)
+        binding.homeRv.adapter = HomeViewModel.adapter
+    }
+
+    /**========================================== METHOD FOR STARTING ADD REPO ACTIVITY ========================================**/
+    private fun addRepoActivity() {
+        val intent = Intent(this, AddRepoActivity::class.java)
+        startActivity(intent)
+    }
+
+    /**====================================== METHOD FOR GETTING REPO LIST FROM DATABASE =====================================**/
     private fun getFromDatabase() {
         val repoDetailsList: MutableList<RepoItem> = mutableListOf()
         lifecycleScope.launch(Dispatchers.Main) {
@@ -69,38 +99,6 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
                 HomeViewModel.lastDataBaseID = repoDetailsList[repoDetailsList.size - 1].id + 1
             }
         }
-    }
-
-    /**===================================== METHOD FOR INITIALIZING HINT LAYOUTS ==============================================**/
-    private fun initializeHintLayouts() {
-        binding.addRepoButton2.setOnClickListener { addRepoActivity() }
-
-        HomeViewModel.repoCount.value = 0
-        HomeViewModel.repoCount.observe(this, Observer {
-            if (it == 0) {
-                binding.trackRepoTextView.visibility = View.VISIBLE
-                binding.addRepoButton2.visibility = View.VISIBLE
-            } else {
-                binding.trackRepoTextView.visibility = View.GONE
-                binding.addRepoButton2.visibility = View.GONE
-            }
-        })
-    }
-
-    /**========================================== METHOD FOR INITIALIZING RECYCLER VIEW ========================================**/
-    private fun initializeRecyclerView() {
-        binding.homeRv.layoutManager = LinearLayoutManager(this)
-        HomeViewModel.adapter = ReposRecyclerAdapter(HomeViewModel.reposList, this)
-        binding.homeRv.adapter = HomeViewModel.adapter
-    }
-
-    /**========================================== METHOD FOR STARTING ADD REPO ACTIVITY ========================================**/
-    private fun addRepoActivity() {
-//        HomeViewModel.reposList.add(RepoItem("Owner", "Name", "Desc", "url", 25))
-//        HomeViewModel.adapter.notifyItemInserted(HomeViewModel.reposList.size)
-        val intent = Intent(this, AddRepoActivity::class.java)
-        startActivity(intent)
-//        HomeViewModel.repoCount.value = HomeViewModel.repoCount.value!! + 1
     }
 
 

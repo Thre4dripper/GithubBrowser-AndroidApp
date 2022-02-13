@@ -105,6 +105,7 @@ class DetailActivity : AppCompatActivity() {
         finish()
     }
 
+    /**====================================== METHOD FOR DELETING REPO FROM DATABASE ============================================**/
     private suspend fun deleteRepoFromDatabase(deletingRepo: RepoItem) {
         val repoDetailsEntity = RepoDetailsEntity(
             deletingRepo.id,
