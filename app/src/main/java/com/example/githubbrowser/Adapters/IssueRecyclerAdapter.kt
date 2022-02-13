@@ -1,6 +1,5 @@
 package com.example.githubbrowser.Adapters
 
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +22,11 @@ class IssueRecyclerAdapter(private val issueList: MutableList<IssueItem>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val issueItem = issueList[position]
         holder.issueText.text = issueItem.issue
-        Glide.with(holder.issuerAvatar.context).load(issueItem.imgUrl).circleCrop()
+
+        Glide.with(holder.issuerAvatar.context)
+            .load(issueItem.imgUrl)
+            .placeholder(R.drawable.ic_placeholder_avatar)
+            .circleCrop()
             .into(holder.issuerAvatar)
 
         holder.issuerName.text = issueItem.issuerName

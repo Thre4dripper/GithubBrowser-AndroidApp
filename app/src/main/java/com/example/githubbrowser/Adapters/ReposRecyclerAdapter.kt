@@ -32,7 +32,9 @@ class ReposRecyclerAdapter(
             holder.repoDesc.text = repoItem.repoDesc
         else holder.repoDesc.text = Html.fromHtml("<em>No Description</em>")
 
-        Glide.with(holder.image.context).load(repoItem.imgUrl).circleCrop().into(holder.image)
+        Glide.with(holder.image.context).load(repoItem.imgUrl)
+            .placeholder(R.drawable.ic_placeholder_avatar)
+            .circleCrop().into(holder.image)
     }
 
     override fun getItemCount() = repoList.size

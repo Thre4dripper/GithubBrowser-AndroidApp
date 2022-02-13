@@ -27,7 +27,10 @@ class CommitsRecyclerAdapter(private val commitsList: MutableList<CommitItem>) :
         holder.commitDate.text = parseDate(commitItem.date)
         holder.commitSHA.text = commitItem.shaCode
         holder.commitMessage.text = commitItem.commitMessage
-        Glide.with(holder.committerAvatar.context).load(commitItem.imgUrl).circleCrop()
+
+        Glide.with(holder.committerAvatar.context).load(commitItem.imgUrl)
+            .placeholder(R.drawable.ic_placeholder_avatar)
+            .circleCrop()
             .into(holder.committerAvatar)
 
         holder.committerName.text = commitItem.committerName
