@@ -63,8 +63,8 @@ class CommitsActivity : AppCompatActivity() {
                 //sending api call
                 val task = async(Dispatchers.IO) {
                     CommitsViewModel.getCommitsList(
-                        HomeViewModel.reposList[index].repoOwner,
-                        HomeViewModel.reposList[index].repoName,
+                        HomeViewModel.reposList[DetailsViewModel.selectedRepo].repoOwner,
+                        HomeViewModel.reposList[DetailsViewModel.selectedRepo].repoName,
                         DetailsViewModel.branchesList!![index]
                     )
                 }

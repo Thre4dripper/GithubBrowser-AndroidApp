@@ -37,7 +37,7 @@
             android:id="@+id/commits_loading_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/loading_branches"
+            android:text="@string/loading_commits"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/commits_loading_progress_view"
             app:layout_constraintEnd_toEndOf="parent"

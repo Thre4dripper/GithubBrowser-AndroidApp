@@ -47,7 +47,8 @@ class ApiResponse {
             branch: String
         ): MutableList<CommitItem>? {
             val response =
-                getJsonResponse("$BASE_URL$owner/$repoName/commits?sha=$branch") ?: return null
+                getJsonResponse("$BASE_URL$owner/$repoName/commits?sha=$branch&per_page=100000")
+                    ?: return null
 
             return JsonParser.commitsListJsonParser(response.toString())
         }

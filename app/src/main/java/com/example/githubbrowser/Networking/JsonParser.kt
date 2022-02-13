@@ -8,7 +8,9 @@ import org.json.JSONObject
 
 class JsonParser {
     companion object {
+        private var databaseIndex = 1
 
+        /**================================== JSON PARSER FOR API RESPONSE OF REPO DETAILS =====================================**/
         fun repoDetailsJsonParser(jsonResponse: String): RepoItem {
             val rootObject = JSONObject(jsonResponse)
 
@@ -17,9 +19,17 @@ class JsonParser {
             val repoDesc = rootObject.getString("description")
             val avatar = rootObject.getJSONObject("owner").getString("avatar_url")
             val issues = rootObject.getInt("open_issues")
-            return RepoItem(repoOwner, repoName, repoDesc, avatar, issues)
+            return RepoItem(
+                databaseIndex++,
+                repoOwner,
+                repoName,
+                repoDesc,
+                avatar,
+                issues
+            )
         }
 
+        /**================================== JSON PARSER FOR API RESPONSE OF BRANCHES LIST ===================================**/
         fun branchesListJsonParser(jsonResponse: String): MutableList<String> {
             val rootObject = JSONArray(jsonResponse)
 
@@ -32,6 +42,7 @@ class JsonParser {
             return branchList
         }
 
+        /**================================== JSON PARSER FOR API RESPONSE OF ISSUES LIST ======================================**/
         fun issuesListJsonParser(jsonResponse: String): MutableList<IssueItem> {
             val rootObject = JSONArray(jsonResponse)
 
@@ -49,23 +60,34 @@ class JsonParser {
             return issuesList
         }
 
-        fun commitsListJsonParser(jsonResponse: String): MutableList<CommitItem> {
+        /**================================== JSON PARSER FOR API RESPONSE OF COMMITS LIST =====================================**/
+        fun commitsListJsonParser(jsonResponse: String): MutableList<CommitItem>? {
             val rootObject = JSONArray(jsonResponse)
 
             val commitsList: MutableList<CommitItem> = mutableListOf()
 
             for (i in 0 until rootObject.length()) {
+
                 val commitDate =
-                    rootObject.getJSONObject(i).getJSONObject("commit").getJSONObject("author")
+                    rootObject.getJSONObject(i).getJSONObject("commit").getJSONObject("committer")
                         .getString("date")
-                val shaCode = rootObject.getJSONObject(i).getString("sha")
+                val shaCode = rootObject.getJSONObject(i).getString("sha").substring(0, 6)
                 val commitMessage =
                     rootObject.getJSONObject(i).getJSONObject("commit").getString("message")
-                        .substring(0, 6)
-                val commitUserAvatar =
-                    rootObject.getJSONObject(i).getJSONObject("author").getString("avatar_url")
-                val commitUSerName =
-                    rootObject.getJSONObject(i).getJSONObject("author").getString("login")
+                val commitUserName: String
+                val commitUserAvatar: String
+
+                var author = rootObject.getJSONObject(i)
+
+                if (!author.isNull("author")) {
+                    author = author.getJSONObject("author")
+                    commitUserName = author.getString("login")
+                    commitUserAvatar = author.getString("avatar_url")
+                } else {
+                    commitUserAvatar = ""
+                    commitUserName =
+                        author.getJSONObject("commit").getJSONObject("committer").getString("name")
+                }
 
                 commitsList.add(
                     CommitItem(
@@ -73,12 +95,12 @@ class JsonParser {
                         shaCode,
                         commitMessage,
                         commitUserAvatar,
-                        commitUSerName
+                        commitUserName
                     )
                 )
-            }
 
-            println(commitsList)
+                println(commitUserName)
+            }
             return commitsList
         }
     }

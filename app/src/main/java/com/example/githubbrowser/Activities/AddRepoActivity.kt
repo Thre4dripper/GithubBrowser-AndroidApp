@@ -48,14 +48,14 @@ class AddRepoActivity : AppCompatActivity() {
         val owner = binding.ownerTextView.text.toString()
         val repoName = binding.addRepoTextView.text.toString()
 
-        //progress dialogue
-        val progressDialog = ProgressDialog(this@AddRepoActivity)
-        progressDialog.setTitle("Adding Repo")
-        progressDialog.setCancelable(false)
-        progressDialog.show()
-
         //fields should not be empty
         if (owner.isNotEmpty() && repoName.isNotEmpty()) {
+            //progress dialogue
+            val progressDialog = ProgressDialog(this@AddRepoActivity)
+            progressDialog.setTitle("Adding Repo")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
+
             binding.ownerTextLayout.error = null
             binding.repoNameTextLayout.error = null
 

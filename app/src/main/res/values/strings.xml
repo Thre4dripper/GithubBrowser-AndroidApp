@@ -54,4 +54,5 @@
     <string name="placeholder_commit_message">Commit Message</string>
     <string name="placeholder_commit_user">Commit User</string>
     <string name="desc_commit_user_avatar">Commit User Image</string>
+    <string name="loading_commits">Loading Commits</string>
 </resources>
