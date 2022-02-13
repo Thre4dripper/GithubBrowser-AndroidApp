@@ -9,8 +9,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.example.githubbrowser.R
 import com.example.githubbrowser.ViewModels.HomeViewModel
+import com.example.githubbrowser.database.RepoDetailsDatabase
+import com.example.githubbrowser.database.RepoDetailsEntity
 import com.example.githubbrowser.databinding.ActivityAddRepoBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -75,6 +78,9 @@ class AddRepoActivity : AppCompatActivity() {
             } else {
                 binding.repoNameTextLayout.error = null
                 HomeViewModel.adapter.notifyItemInserted(HomeViewModel.reposList.size)
+                HomeViewModel.repoCount.value = HomeViewModel.repoCount.value!! + 1
+
+                insertDataIntoDatabase()
                 finish()
             }
 
@@ -82,6 +88,24 @@ class AddRepoActivity : AppCompatActivity() {
         } else {
             binding.ownerTextLayout.error = "Required*"
             binding.repoNameTextLayout.error = "Required*"
+        }
+    }
+
+    private fun insertDataIntoDatabase() {
+
+        val repoItem = HomeViewModel.reposList[HomeViewModel.reposList.size - 1]
+        val repoDetailsEntity = RepoDetailsEntity(
+            repoItem.id,
+            repoItem.repoOwner,
+            repoItem.repoName,
+            repoItem.repoDesc,
+            repoItem.imgUrl,
+            repoItem.issues
+        )
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            RepoDetailsDatabase.getDatabase(this@AddRepoActivity).entityDao()
+                .insertData(repoDetailsEntity)
         }
     }
 

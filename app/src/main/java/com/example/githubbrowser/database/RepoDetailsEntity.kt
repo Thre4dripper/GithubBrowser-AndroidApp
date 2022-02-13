@@ -5,11 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "repo_details")
 data class RepoDetailsEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id:Int,
-    val repoOwner:String,
+    val repoOwner: String,
     val repoName: String,
     val repoDesc: String,
     val imgUrl: String,
-    val issues:Int
+    val issues: Int
 )

@@ -8,12 +8,18 @@ import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.githubbrowser.Fragments.BranchesFragment
 import com.example.githubbrowser.Fragments.IssuesFragment
 import com.example.githubbrowser.R
 import com.example.githubbrowser.ViewModels.DetailsViewModel
 import com.example.githubbrowser.ViewModels.HomeViewModel
+import com.example.githubbrowser.dataModels.RepoItem
+import com.example.githubbrowser.database.RepoDetailsDatabase
+import com.example.githubbrowser.database.RepoDetailsEntity
 import com.example.githubbrowser.databinding.ActivityDetailBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
@@ -88,10 +94,27 @@ class DetailActivity : AppCompatActivity() {
 
     /**================================================ METHOD FOR DELETING REPO ==================================================**/
     private fun deleteRepo(index: Int) {
+        val deletingRepo = HomeViewModel.reposList[index]
         HomeViewModel.reposList.removeAt(index)
         HomeViewModel.adapter.notifyItemRemoved(index)
         HomeViewModel.repoCount.value = HomeViewModel.repoCount.value!! - 1
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            deleteRepoFromDatabase(deletingRepo)
+        }
         finish()
+    }
+
+    private suspend fun deleteRepoFromDatabase(deletingRepo: RepoItem) {
+        val repoDetailsEntity = RepoDetailsEntity(
+            deletingRepo.id,
+            deletingRepo.repoOwner,
+            deletingRepo.repoName,
+            deletingRepo.repoDesc,
+            deletingRepo.imgUrl,
+            deletingRepo.issues
+        )
+        RepoDetailsDatabase.getDatabase(this).entityDao().deleteData(repoDetailsEntity)
     }
 
     /**=============================================== METHOD FOR OPENING REPO LINK ==============================================**/

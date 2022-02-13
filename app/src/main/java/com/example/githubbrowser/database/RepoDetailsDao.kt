@@ -1,9 +1,6 @@
 package com.example.githubbrowser.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface RepoDetailsDao {
@@ -13,4 +10,7 @@ interface RepoDetailsDao {
 
     @Query("Select * From repo_details")
     suspend fun getData(): MutableList<RepoDetailsEntity>
+
+    @Delete
+    suspend fun deleteData(repoDetailsEntity: RepoDetailsEntity)
 }
