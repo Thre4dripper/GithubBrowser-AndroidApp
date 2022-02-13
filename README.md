@@ -13,7 +13,9 @@ Tap on any **Branch** to show all the commits of that Branch with all the necess
 Tap on **Issues** tab to show all the active issues of the repo with all the necessary details of that issue.
 
 ### For Developers
-Simply Import the project to the android studio either by zip file or directly from repo's link.
+Simply Import the project to the android studio either by zip file or directly from repo's link and wait for the gradle plugin to load all the dependencies required to compile this app.
+
+This app is completely made in Kotlin language.
 
 >**Note:** This App is successfully tested on **Android Studio Bumblebee 2021.1.1 Patch 1**
 
