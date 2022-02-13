@@ -47,10 +47,17 @@ class DetailActivity : AppCompatActivity() {
                     HomeViewModel.reposList[index].repoName
         )
 
-        binding.detailsRepoDescText.text = Html.fromHtml(
-            "<b>" + getString(R.string.details_repo_desc) + "</b> " +
-                    HomeViewModel.reposList[index].repoDesc
-        )
+        val repoDesc = HomeViewModel.reposList[index].repoDesc
+        if (repoDesc != "null")
+            binding.detailsRepoDescText.text = Html.fromHtml(
+                "<b>" + getString(R.string.details_repo_desc) + "</b> " +
+                        HomeViewModel.reposList[index].repoDesc
+            )
+        else
+            binding.detailsRepoDescText.text = Html.fromHtml(
+                "<b>" + getString(R.string.details_repo_desc) + "</b> " +
+                        " <em>No Description</em>"
+            )
 
         binding.detailsIssueTextView.text = getString(
             R.string.details_issues_text,
