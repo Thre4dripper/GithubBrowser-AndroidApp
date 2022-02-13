@@ -43,15 +43,21 @@ class ReposRecyclerAdapter(
         var repoDesc = itemView.findViewById<TextView>(R.id.repo_desc)!!
         var image = itemView.findViewById<ImageView>(R.id.repo_owner_avatar)!!
         private var repoCard = itemView.findViewById<CardView>(R.id.repo_card)!!
+        private var sendRepoDetails = itemView.findViewById<ImageView>(R.id.send_repo_info)!!
 
         init {
-            repoCard.setOnClickListener {
-                homeOnClickInterface.repoClick(adapterPosition)
+            repoCard.setOnClickListener { homeOnClickInterface.repoClick(adapterPosition) }
+
+            sendRepoDetails.setOnClickListener {
+                homeOnClickInterface.sendRepoDetails(
+                    adapterPosition
+                )
             }
         }
     }
 
     interface HomeOnClickInterface {
         fun repoClick(position: Int);
+        fun sendRepoDetails(position: Int)
     }
 }

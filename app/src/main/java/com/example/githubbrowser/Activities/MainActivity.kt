@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
     }
 
 
-    /**============================================ ONCLICK METHOD FOR REPO CARDS ========================================**/
+    /**============================================= ONCLICK METHOD FOR REPO CARDS ===========================================**/
     override fun repoClick(position: Int) {
 
         //clearing lists before opening new repo
@@ -115,5 +115,29 @@ class MainActivity : AppCompatActivity(), ReposRecyclerAdapter.HomeOnClickInterf
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra(REPO_CARD_KEY, position)
         startActivity(intent)
+    }
+
+    /**=================================== ONCLICK METHOD FOR REPO CARDS SEND BUTTON ======================================**/
+    override fun sendRepoDetails(position: Int) {
+        val clickedRepo = HomeViewModel.reposList[position]
+        val repoName = clickedRepo.repoName
+        val repoDesc = clickedRepo.repoDesc
+
+        val github = "https://github.com/"
+        val ownerName = HomeViewModel.reposList[position].repoOwner
+        val repoUrl = "$github/$ownerName/$repoName"
+
+        val repoDetails = "Repo Name: $repoName\n" +
+                "Repo Description: $repoDesc\n" +
+                "Repo Link: $repoUrl"
+
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, repoDetails)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 }
