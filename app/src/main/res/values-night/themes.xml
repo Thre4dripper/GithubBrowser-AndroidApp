@@ -3,7 +3,7 @@
     <style name="Theme.GithubBrowser" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#282C34</item>
-        <item name="colorPrimaryVariant">#373D49</item>
+        <item name="colorPrimaryVariant">#424957</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
