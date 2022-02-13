@@ -24,7 +24,7 @@ class CommitsRecyclerAdapter(private val commitsList: MutableList<CommitItem>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val commitItem = commitsList[position]
 
-        holder.commitDate.text = commitItem.date
+        holder.commitDate.text = parseDate(commitItem.date)
         holder.commitSHA.text = commitItem.shaCode
         holder.commitMessage.text = commitItem.commitMessage
         Glide.with(holder.committerAvatar.context).load(commitItem.imgUrl).circleCrop()
@@ -41,5 +41,28 @@ class CommitsRecyclerAdapter(private val commitsList: MutableList<CommitItem>) :
         val commitMessage = itemView.findViewById<TextView>(R.id.commit_message_text_view)!!
         val committerAvatar = itemView.findViewById<ImageView>(R.id.committer_avatar)!!
         val committerName = itemView.findViewById<TextView>(R.id.committer_name_text_view)!!
+    }
+
+    private fun parseDate(dateString: String): String {
+        val year = dateString.substring(0, 4)
+        var month = dateString.substring(5, 7)
+        val date = dateString.substring(8, 10)
+
+        month = when (month) {
+            "01" -> "Jan"
+            "02" -> "Feb"
+            "03" -> "Mar"
+            "04" -> "Apr"
+            "05" -> "May"
+            "06" -> "Jun"
+            "07" -> "July"
+            "08" -> "Aug"
+            "09" -> "Sept"
+            "10" -> "Oct"
+            "11" -> "Nov"
+            else -> "Dec"
+        }
+
+        return "$date $month $year"
     }
 }
