@@ -35,6 +35,7 @@
             android:hint="@string/owner_organization"
             app:boxStrokeColor="@color/mtrl_textinput_default_box_stroke_color"
             app:errorEnabled="true"
+            app:hintTextColor="@color/mtrl_textinput_default_box_stroke_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView">
@@ -60,6 +61,7 @@
             android:hint="@string/repo_name"
             app:boxStrokeColor="@color/mtrl_textinput_default_box_stroke_color"
             app:errorEnabled="true"
+            app:hintTextColor="@color/mtrl_textinput_default_box_stroke_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/owner_text_layout">

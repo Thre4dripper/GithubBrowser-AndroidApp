@@ -1,5 +1,7 @@
 package com.example.githubbrowser.Adapters
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.githubbrowser.R
@@ -32,6 +35,11 @@ class ReposRecyclerAdapter(
             holder.repoDesc.text = repoItem.repoDesc
         else holder.repoDesc.text = Html.fromHtml("<em>No Description</em>")
 
+        holder.sendRepoDetails.imageTintList =
+            ColorStateList.valueOf(
+                ContextCompat.getColor(holder.sendRepoDetails.context,R.color.text_color)
+            )
+
         Glide.with(holder.image.context).load(repoItem.imgUrl)
             .placeholder(R.drawable.ic_placeholder_avatar)
             .circleCrop().into(holder.image)
@@ -45,7 +53,7 @@ class ReposRecyclerAdapter(
         var repoDesc = itemView.findViewById<TextView>(R.id.repo_desc)!!
         var image = itemView.findViewById<ImageView>(R.id.repo_owner_avatar)!!
         private var repoCard = itemView.findViewById<CardView>(R.id.repo_card)!!
-        private var sendRepoDetails = itemView.findViewById<ImageView>(R.id.send_repo_info)!!
+        var sendRepoDetails = itemView.findViewById<ImageView>(R.id.send_repo_info)!!
 
         init {
             repoCard.setOnClickListener { homeOnClickInterface.repoClick(adapterPosition) }

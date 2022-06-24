@@ -25,7 +25,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
 
     private var selectedColor = Color.parseColor("#78909C")
-    private var unSelectedColor = Color.WHITE
+    private var unSelectedColor = Color.parseColor("#263238")
 
     /**========================================================== ON CREATE =========================================================**/
     override fun onCreate(savedInstanceState: Bundle?) {
